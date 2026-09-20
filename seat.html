@@ -32,44 +32,39 @@
     <!-- Step Progress Bar -->
     <div class="step-progress-wrapper">
       <div class="step-progress">
-        <div class="step-item done">
-          <span class="step-number">✓</span>
-          <span>1. ค้นหาเที่ยวบิน</span>
+        <div class="step-item active">
+          <span class="step-number">1</span>
+          <span>1. เลือกที่นั่ง</span>
         </div>
-        <div class="step-divider done"></div>
-        <div class="step-item done">
-          <span class="step-number">✓</span>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">2</span>
           <span>2. ข้อมูลผู้โดยสาร</span>
         </div>
-        <div class="step-divider done"></div>
-        <div class="step-item active">
+        <div class="step-divider"></div>
+        <div class="step-item">
           <span class="step-number">3</span>
-          <span>3. เลือกที่นั่ง</span>
+          <span>3. สรุปข้อมูล</span>
         </div>
         <div class="step-divider"></div>
         <div class="step-item">
           <span class="step-number">4</span>
-          <span>4. สรุปข้อมูล</span>
+          <span>4. ชำระเงิน</span>
         </div>
         <div class="step-divider"></div>
         <div class="step-item">
           <span class="step-number">5</span>
-          <span>5. ชำระเงิน</span>
-        </div>
-        <div class="step-divider"></div>
-        <div class="step-item">
-          <span class="step-number">6</span>
-          <span>6. บัตรโดยสาร</span>
+          <span>5. บัตรโดยสาร</span>
         </div>
       </div>
     </div>
 
     <!-- Page Header -->
     <div class="page-header">
-      <a href="passenger.html" class="back-btn">←</a>
+      <a href="index.html" class="back-btn" title="กลับหน้าหลัก">←</a>
       <div class="page-title">
         <h1>🪑 เลือกที่นั่ง (Seat Selection)</h1>
-        <div class="subtitle">เที่ยวบิน <span id="pageFlightId">—</span> &nbsp;|&nbsp; <span id="pageRoute">—</span> &nbsp;|&nbsp; ผู้โดยสาร: <strong id="passengerDisplayName" style="color:var(--primary)">—</strong></div>
+        <div class="subtitle">เที่ยวบิน <span id="pageFlightId">—</span> &nbsp;|&nbsp; <span id="pageRoute">—</span> &nbsp;|&nbsp; ผู้โดยสาร: <strong id="passengerDisplayName" style="color:var(--primary)">กรอกในขั้นตอนถัดไป</strong></div>
       </div>
     </div>
 
@@ -159,7 +154,7 @@
 
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button>
-        <button class="btn btn-primary" id="confirmBookingBtn">ถัดไป: สรุปข้อมูลการจอง 📋 →</button>
+        <button class="btn btn-primary" id="confirmBookingBtn">ถัดไป: กรอกข้อมูลผู้โดยสาร 👤 →</button>
       </div>
     </div>
   </div>

@@ -116,7 +116,7 @@ function getAllSeatsForFlight(flightId) {
 
 function selectFlight(flightId) {
   sessionStorage.setItem('selectedFlight', flightId);
-  window.location.href = 'passenger.html';
+  window.location.href = 'seat.html';
 }
 
 function setupSearch() {
@@ -164,8 +164,8 @@ function updateNavStats() {
 // ─── Promo Card Click ─────────────────────────────────────────
 function selectPromo(flightId) {
   sessionStorage.setItem('selectedFlight', flightId);
-  showToast('กำลังไปยังข้อมูลผู้โดยสาร...', 'info', 1500);
+  showToast('กำลังไปยังหน้าเลือกที่นั่ง...', 'info', 1500);
   setTimeout(() => {
-    window.location.href = 'passenger.html';
+    window.location.href = 'seat.html';
   }, 600);
 }

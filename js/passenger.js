@@ -1,6 +1,6 @@
 /**
- * passenger.js — X-Fly Passenger Information Logic
- * Validates and preserves passenger draft before seat selection
+ * passenger.js — Xfly-Anyway Passenger Information Logic
+ * Step 2: Validates and preserves passenger draft after seat selection
  */
 
 let currentFlight = null;
@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Must have selected a seat first (Step 1)
+  const pendingBookingStr = sessionStorage.getItem('pendingBooking');
+  if (!pendingBookingStr) {
+    showToast('กรุณาเลือกที่นั่งก่อนกรอกข้อมูลผู้โดยสาร', 'warning');
+    setTimeout(() => window.location.href = 'seat.html', 1000);
+    return;
+  }
+
   renderFlightBanner();
   populateSavedPassenger();
   setupPassengerForm();
@@ -32,6 +40,19 @@ function renderFlightBanner() {
   document.getElementById('bannerFlightNum').textContent = `${f.id} — ${f.airlineName || 'Xfly-Anyway Airlines'}`;
   document.getElementById('bannerRoute').textContent = `${f.from.city} (${f.from.code}) → ${f.to.city} (${f.to.code})`;
   document.getElementById('bannerTime').textContent = `${f.departure} – ${f.arrival} (${f.duration})`;
+
+  const pendingBookingStr = sessionStorage.getItem('pendingBooking');
+  if (pendingBookingStr) {
+    try {
+      const pb = JSON.parse(pendingBookingStr);
+      const seatEl = document.getElementById('bannerSeat');
+      if (seatEl) {
+        seatEl.textContent = `${pb.seatId} (${pb.seatClass === 'business' ? 'Business' : 'Economy'})`;
+      }
+      document.getElementById('bannerPrice').textContent = formatPrice(pb.price);
+      return;
+    } catch(e) {}
+  }
   document.getElementById('bannerPrice').textContent = formatPrice(f.price);
 }
 
@@ -94,9 +115,9 @@ function setupPassengerForm() {
     // Save draft
     sessionStorage.setItem('passengerDraft', JSON.stringify(passengerData));
 
-    showToast('บันทึกข้อมูลผู้โดยสารเรียบร้อย กำลังไปหน้าเลือกที่นั่ง...', 'success', 1200);
+    showToast('บันทึกข้อมูลผู้โดยสารเรียบร้อย กำลังไปหน้าสรุปข้อมูล...', 'success', 1200);
     setTimeout(() => {
-      window.location.href = 'seat.html';
+      window.location.href = 'summary.html';
     }, 500);
   });
 }

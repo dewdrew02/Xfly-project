@@ -35,14 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Get passenger draft from session
-  const passengerStr = sessionStorage.getItem('passengerDraft');
-  if (!passengerStr) {
-    showToast('กรุณากรอกข้อมูลผู้โดยสารก่อนเลือกที่นั่ง', 'warning');
-    setTimeout(() => window.location.href = 'passenger.html', 1000);
-    return;
-  }
-
   renderPassengerDisplay();
   renderFlightInfo();
   renderSeatMap();
@@ -277,13 +269,24 @@ function closeModal() {
 
 function renderPassengerDisplay() {
   const passengerStr = sessionStorage.getItem('passengerDraft');
-  if (!passengerStr) return;
+  const nameEl = document.getElementById('passengerDisplayName');
+  const sidebarEl = document.getElementById('sidebarPassengerInfo');
+
+  if (!passengerStr) {
+    if (nameEl) nameEl.textContent = 'กรอกในขั้นตอนถัดไป';
+    if (sidebarEl) {
+      sidebarEl.innerHTML = `
+        <div style="color:var(--text-muted);font-size:13px;line-height:1.5">
+          👤 ขั้นตอนถัดไป: กรอกข้อมูลผู้โดยสาร
+        </div>
+      `;
+    }
+    return;
+  }
   try {
     const p = JSON.parse(passengerStr);
-    const nameEl = document.getElementById('passengerDisplayName');
     if (nameEl) nameEl.textContent = `${p.title || ''} ${p.firstName} ${p.lastName}`;
 
-    const sidebarEl = document.getElementById('sidebarPassengerInfo');
     if (sidebarEl) {
       sidebarEl.innerHTML = `
         <div style="font-weight:700;color:var(--text-primary)">${p.title || ''} ${p.firstName} ${p.lastName}</div>
@@ -318,5 +321,5 @@ function proceedToPayment(seatId, seatClass, price) {
   }));
 
   document.getElementById('bookingModal').classList.remove('active');
-  window.location.href = 'summary.html';
+  window.location.href = 'passenger.html';
 }
