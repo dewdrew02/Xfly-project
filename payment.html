@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ชำระเงิน — Xfly-Anyway Airlines</title>
+  <meta name="description" content="ชำระเงินค่าตั๋วเครื่องบิน X-Fly ผ่านช่องทางปลอดภัย">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .payment-method-card {
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface2);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .payment-method-card:hover {
+      border-color: var(--border-gold);
+    }
+    .payment-method-card.active {
+      border-color: var(--primary);
+      background: rgba(255, 215, 0, 0.08);
+      box-shadow: 0 0 16px rgba(255, 215, 0, 0.15);
+    }
+    .qr-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      display: inline-block;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html">✈ หน้าหลัก</a></li>
+        <li><a href="history.html">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <!-- Step Progress Bar -->
+    <div class="step-progress-wrapper">
+      <div class="step-progress">
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>1. ค้นหาเที่ยวบิน</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>2. ข้อมูลผู้โดยสาร</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>3. เลือกที่นั่ง</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>4. สรุปข้อมูล</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item active">
+          <span class="step-number">5</span>
+          <span>5. ชำระเงิน</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">6</span>
+          <span>6. บัตรโดยสาร</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header" style="margin-bottom:28px">
+      <a href="summary.html" class="back-btn">←</a>
+      <div class="page-title">
+        <h1>💳 ชำระเงิน (Secure Payment)</h1>
+        <div class="subtitle">เลือกช่องทางการชำระเงินเพื่อออกบัตรโดยสารอิเล็กทรอนิกส์</div>
+      </div>
+      <div class="timer-badge" id="timerBadge">
+        <span>⏰ เวลาชำระเงินที่เหลือ</span>
+        <span class="timer-count" id="timerCount">10:00</span>
+      </div>
+    </div>
+
+    <div class="payment-grid">
+      <!-- Left: Payment Form & Methods -->
+      <div class="payment-form-section">
+        <!-- Payment Methods Selector -->
+        <div class="card" style="padding:28px;margin-bottom:24px">
+          <div class="form-section-title" style="margin-bottom:16px">
+            <div class="icon">💰</div>
+            เลือกช่องทางชำระเงิน
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+            <div class="payment-method-card active" id="methodCardBtn" onclick="switchPaymentMethod('card')">
+              <span style="font-size:24px">💳</span>
+              <div>
+                <div style="font-weight:700;font-size:14px">บัตรเครดิต/เดบิต</div>
+                <div style="font-size:11px;color:var(--text-muted)">Visa, Mastercard</div>
+              </div>
+            </div>
+
+            <div class="payment-method-card" id="methodQrBtn" onclick="switchPaymentMethod('qr')">
+              <span style="font-size:24px">📱</span>
+              <div>
+                <div style="font-weight:700;font-size:14px">PromptPay QR</div>
+                <div style="font-size:11px;color:var(--text-muted)">สแกนจ่ายได้ทุกธนาคาร</div>
+              </div>
+            </div>
+
+            <div class="payment-method-card" id="methodBankBtn" onclick="switchPaymentMethod('bank')">
+              <span style="font-size:24px">🏦</span>
+              <div>
+                <div style="font-weight:700;font-size:14px">Mobile Banking</div>
+                <div style="font-size:11px;color:var(--text-muted)">โอนผ่านแอปธนาคาร</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 1: Credit Card Form -->
+          <form id="creditCardForm" autocomplete="off">
+            <div class="form-group card-number-wrap">
+              <label for="cardNumber">หมายเลขบัตร (Card Number)</label>
+              <input type="text" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required value="4532 8765 4321 9087">
+              <div class="card-icons" style="font-size:14px;color:var(--primary);font-weight:700">VISA / MC</div>
+            </div>
+
+            <div class="form-row" style="margin-top:16px">
+              <div class="form-group">
+                <label for="cardExpiry">วันหมดอายุ (Expiry Date)</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required value="12/28">
+              </div>
+              <div class="form-group">
+                <label for="cardCvv">CVV / CVC</label>
+                <input type="text" id="cardCvv" placeholder="XXX" maxlength="3" required value="888">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:16px">
+              <label for="cardName">ชื่อบนบัตร (Name on Card)</label>
+              <input type="text" id="cardName" placeholder="SOMCHAI JAIDEE" style="text-transform:uppercase" required value="SOMCHAI JAIDEE">
+            </div>
+
+            <div style="margin-top:24px;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--success-bg);border:1px solid rgba(0,200,150,.2);border-radius:var(--radius-md);font-size:13px;color:var(--success)">
+              🔐 ชำระเงินปลอดภัยด้วยระบบ 3D Secure และ SSL 256-bit
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-full" id="cardSubmitBtn" style="margin-top:24px;padding:16px">
+              ✈️ ยืนยันชำระเงิน <span class="pay-amount-label">฿0</span>
+            </button>
+          </form>
+
+          <!-- Method 2: PromptPay QR View -->
+          <div id="qrPayView" style="display:none;text-align:center;padding:20px 0">
+            <div style="font-size:14px;color:var(--text-secondary);margin-bottom:16px">
+              สแกน QR Code ด้วยแอปธนาคารใดก็ได้ เพื่อชำระเงิน
+            </div>
+
+            <div class="qr-box">
+              <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:8px">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/PromptPay-logo.png" alt="PromptPay" style="height:28px" onerror="this.style.display='none'">
+                <span style="font-weight:900;color:#002d62;font-size:18px">พร้อมเพย์</span>
+              </div>
+              <!-- Simulated QR SVG -->
+              <svg width="180" height="180" viewBox="0 0 100 100" style="margin:8px auto;display:block">
+                <rect width="100" height="100" fill="#ffffff"/>
+                <path d="M10,10 h30 v30 h-30 z M15,15 v20 h20 v-20 z" fill="#000"/>
+                <rect x="20" y="20" width="10" height="10" fill="#000"/>
+                <path d="M60,10 h30 v30 h-30 z M65,15 v20 h20 v-20 z" fill="#000"/>
+                <rect x="70" y="20" width="10" height="10" fill="#000"/>
+                <path d="M10,60 h30 v30 h-30 z M15,65 v20 h20 v-20 z" fill="#000"/>
+                <rect x="20" y="70" width="10" height="10" fill="#000"/>
+                <rect x="50" y="15" width="5" height="15" fill="#000"/>
+                <rect x="50" y="40" width="15" height="10" fill="#000"/>
+                <rect x="40" y="55" width="20" height="8" fill="#000"/>
+                <rect x="65" y="60" width="20" height="20" fill="#000"/>
+                <rect x="45" y="75" width="15" height="15" fill="#000"/>
+                <rect x="70" y="45" width="15" height="8" fill="#000"/>
+              </svg>
+              <div style="font-size:16px;font-weight:800;color:#000" class="pay-amount-label">฿0</div>
+              <div style="font-size:11px;color:#666;margin-top:2px">Xfly-Anyway Airlines Corporate Account</div>
+            </div>
+
+            <div style="margin-top:24px">
+              <button class="btn btn-primary btn-lg" onclick="simulateSuccessfulPayment('PromptPay')" id="qrConfirmBtn" style="padding:16px 36px">
+                ✅ ฉันชำระเงินเรียบร้อยแล้ว (จำลองสำเร็จ)
+              </button>
+            </div>
+          </div>
+
+          <!-- Method 3: Mobile Banking View -->
+          <div id="bankPayView" style="display:none;padding:16px 0">
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+              <div style="padding:16px;background:var(--bg-surface3);border-radius:var(--radius-md);border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-weight:700">ธนาคารกสิกรไทย (KBANK)</div>
+                  <div style="font-size:12px;color:var(--text-muted)">ชื่อบัญชี: บจก. เอ็กซ์ฟลาย-แอนี่เวย์ แอร์ไลน์ส</div>
+                  <div style="font-size:16px;font-weight:800;color:var(--primary);margin-top:4px">123-4-56789-0</div>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="showToast('คัดลอกเลขบัญชีแล้ว', 'success')">คัดลอก</button>
+              </div>
+
+              <div style="padding:16px;background:var(--bg-surface3);border-radius:var(--radius-md);border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-weight:700">ธนาคารไทยพาณิชย์ (SCB)</div>
+                  <div style="font-size:12px;color:var(--text-muted)">ชื่อบัญชี: บจก. เอ็กซ์ฟลาย-แอนี่เวย์ แอร์ไลน์ส</div>
+                  <div style="font-size:16px;font-weight:800;color:var(--primary);margin-top:4px">987-6-54321-0</div>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="showToast('คัดลอกเลขบัญชีแล้ว', 'success')">คัดลอก</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg w-full" onclick="simulateSuccessfulPayment('Mobile Banking')" id="bankConfirmBtn" style="padding:16px">
+              ✅ ยืนยันการโอนเงินและออกบัตรโดยสาร
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right: Booking Summary -->
+      <div class="payment-summary-section">
+        <div class="sidebar-card gold">
+          <div class="sidebar-title">📋 สรุปการจอง</div>
+          <div class="flight-summary-row">
+            <span class="label">✈ เที่ยวบิน</span>
+            <span class="value gold" id="sumFlight">—</span>
+          </div>
+          <div class="flight-summary-row">
+            <span class="label">📍 เส้นทาง</span>
+            <span class="value" id="sumRoute">—</span>
+          </div>
+          <div class="flight-summary-row">
+            <span class="label">👤 ผู้โดยสาร</span>
+            <span class="value" id="sumPassenger">—</span>
+          </div>
+          <div class="flight-summary-row">
+            <span class="label">🕐 เวลา</span>
+            <span class="value" id="sumDeparture">—</span>
+          </div>
+          <div class="flight-summary-row">
+            <span class="label">🪑 ที่นั่ง</span>
+            <span class="value gold" id="sumSeat">—</span>
+          </div>
+          <div class="flight-summary-row">
+            <span class="label">🏷 ชั้นที่นั่ง</span>
+            <span class="value" id="sumClass">—</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-title">💰 รายละเอียดราคา</div>
+          <div class="price-row">
+            <span class="price-label">ราคาตั๋ว</span>
+            <span class="price-value" id="sumBasePrice">—</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">ภาษี (7%)</span>
+            <span class="price-value" id="sumTax">—</span>
+          </div>
+          <div class="price-row">
+            <span class="price-label">ค่าธรรมเนียมสนามบิน</span>
+            <span class="price-value" id="sumFee">฿150</span>
+          </div>
+          <div class="price-divider"></div>
+          <div class="price-total">
+            <span>รวมทั้งสิ้น</span>
+            <span class="total-value" id="sumTotal">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/payment.js"></script>
+</body>
+</html>

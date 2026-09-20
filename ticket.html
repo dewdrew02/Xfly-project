@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บัตรโดยสารอิเล็กทรอนิกส์ — Xfly-Anyway Airlines</title>
+  <meta name="description" content="บัตรโดยสารอิเล็กทรอนิกส์ Electronic Boarding Pass สำหรับเที่ยวบินของคุณ">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html">✈ หน้าหลัก</a></li>
+        <li><a href="history.html">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <!-- Step Progress Bar -->
+    <div class="step-progress-wrapper">
+      <div class="step-progress">
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>1. ค้นหาเที่ยวบิน</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>2. ข้อมูลผู้โดยสาร</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>3. เลือกที่นั่ง</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>4. สรุปข้อมูล</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>5. ชำระเงิน</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item active">
+          <span class="step-number">6</span>
+          <span>6. บัตรโดยสาร</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:48px;margin-bottom:8px">🎉</div>
+      <h1 style="font-size:28px;font-weight:900;color:var(--text-primary)">การจองสำเร็จและออกบัตรโดยสารเรียบร้อย!</h1>
+      <p style="color:var(--text-muted);font-size:14px;margin-top:4px">
+        ระบบได้บันทึกการเดินทางของคุณแล้ว สามารถพิมพ์หรือบันทึก Boarding Pass นี้ไว้เพื่อแสดง ณ วันเดินทาง
+      </p>
+    </div>
+
+    <!-- Boarding Pass Card Container -->
+    <div class="boarding-ticket" id="boardingPassCard">
+      <!-- Main Pass -->
+      <div class="ticket-main">
+        <div class="notch-top"></div>
+        <div class="notch-bottom"></div>
+
+        <!-- Airline & Title Header -->
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:18px;margin-bottom:20px">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:22px">✈️</span>
+              <span style="font-weight:900;font-size:18px;color:var(--primary);letter-spacing:1px" id="ticketAirline">Xfly-Anyway Airlines</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px">
+              Boarding Pass / บัตรขึ้นเครื่องบิน
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase">รหัสการจอง (PNR)</div>
+            <div style="font-size:20px;font-weight:900;color:var(--text-primary);letter-spacing:1px" id="ticketPnr">—</div>
+          </div>
+        </div>
+
+        <!-- Passenger Details -->
+        <div style="margin-bottom:20px">
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">ผู้โดยสาร (Passenger Name)</div>
+          <div style="font-size:20px;font-weight:800;color:var(--text-primary);margin-top:2px" id="ticketPassengerName">—</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px" id="ticketPassengerContact">—</div>
+        </div>
+
+        <!-- Flight Route -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;background:rgba(255,255,255,0.02);padding:16px 20px;border-radius:var(--radius-md);border:1px solid var(--border)">
+          <div>
+            <div style="font-size:28px;font-weight:900;color:var(--primary)" id="ticketFromCode">BKK</div>
+            <div style="font-size:13px;color:var(--text-secondary)" id="ticketFromCity">Bangkok</div>
+            <div style="font-size:16px;font-weight:700;margin-top:4px" id="ticketDepTime">06:00</div>
+          </div>
+
+          <div style="text-align:center;flex:1;padding:0 20px">
+            <div style="font-size:12px;color:var(--text-muted)" id="ticketDuration">1h 15m</div>
+            <div style="height:2px;background:var(--border-gold);position:relative;margin:8px 0">
+              <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#141416;padding:0 6px;color:var(--primary);font-size:12px">✈</span>
+            </div>
+            <div style="font-size:11px;font-weight:700;color:var(--success)">CONFIRMED</div>
+          </div>
+
+          <div style="text-align:right">
+            <div style="font-size:28px;font-weight:900;color:var(--primary)" id="ticketToCode">CNX</div>
+            <div style="font-size:13px;color:var(--text-secondary)" id="ticketToCity">Chiang Mai</div>
+            <div style="font-size:16px;font-weight:700;margin-top:4px" id="ticketArrTime">07:15</div>
+          </div>
+        </div>
+
+        <!-- Key Flight Specs -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;font-size:12px">
+          <div>
+            <div style="color:var(--text-muted);text-transform:uppercase">เที่ยวบิน</div>
+            <div style="font-weight:800;font-size:15px;color:var(--primary)" id="ticketFlightId">—</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted);text-transform:uppercase">วันที่บิน</div>
+            <div style="font-weight:700;font-size:13px" id="ticketDate">—</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted);text-transform:uppercase">เกต (Gate)</div>
+            <div style="font-weight:800;font-size:15px;color:var(--text-primary)">B4</div>
+          </div>
+          <div>
+            <div style="color:var(--text-muted);text-transform:uppercase">เวลาขึ้นเครื่อง</div>
+            <div style="font-weight:800;font-size:15px;color:var(--warning)" id="ticketBoardingTime">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket Stub (Right side) -->
+      <div class="ticket-stub">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:12px">BOARDING PASS</div>
+          <div style="font-size:11px;color:var(--text-muted)">SEAT / ที่นั่ง</div>
+          <div style="font-size:38px;font-weight:900;color:var(--primary);margin:4px 0" id="ticketSeat">—</div>
+          <span class="tag tag-gold" id="ticketClassTag" style="font-size:11px">Economy</span>
+        </div>
+
+        <!-- Simulated Barcode / QR -->
+        <div style="margin:20px 0">
+          <svg width="110" height="110" viewBox="0 0 100 100" style="display:block;margin:0 auto">
+            <rect width="100" height="100" fill="#ffffff" rx="8"/>
+            <path d="M10,10 h25 v25 h-25 z M14,14 v17 h17 v-17 z" fill="#000"/>
+            <rect x="18" y="18" width="9" height="9" fill="#000"/>
+            <path d="M65,10 h25 v25 h-25 z M69,14 v17 h17 v-17 z" fill="#000"/>
+            <rect x="73" y="18" width="9" height="9" fill="#000"/>
+            <path d="M10,65 h25 v25 h-25 z M14,69 v17 h17 v-17 z" fill="#000"/>
+            <rect x="18" y="73" width="9" height="9" fill="#000"/>
+            <rect x="42" y="14" width="6" height="20" fill="#000"/>
+            <rect x="52" y="24" width="8" height="15" fill="#000"/>
+            <rect x="40" y="48" width="22" height="6" fill="#000"/>
+            <rect x="68" y="58" width="18" height="18" fill="#000"/>
+            <rect x="42" y="72" width="14" height="14" fill="#000"/>
+          </svg>
+          <div style="font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-top:6px" id="ticketBarcodeText">XF-PASS-OK</div>
+        </div>
+
+        <div style="width:100%">
+          <div style="font-size:11px;color:var(--text-muted)">ยอดชำระเงินสุทธิ</div>
+          <div style="font-size:16px;font-weight:800;color:var(--success)" id="ticketPrice">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Toolbar -->
+    <div style="max-width:780px;margin:32px auto 0;display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-lg" onclick="window.print()">
+        🖨️ พิมพ์บัตรโดยสาร (Print Boarding Pass)
+      </button>
+      <a href="history.html" class="btn btn-outline btn-lg">
+        📋 ดูประวัติการจองทั้งหมด
+      </a>
+      <a href="index.html" class="btn btn-ghost btn-lg">
+        ✈️ ค้นหาเที่ยวบินใหม่
+      </a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ticket.js"></script>
+</body>
+</html>

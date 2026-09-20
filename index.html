@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xfly-Anyway Airlines — จองตั๋วเครื่องบินออนไลน์</title>
+  <meta name="description" content="Xfly-Anyway Airlines จองตั๋วเครื่องบินออนไลน์ ราคาถูก เส้นทางในประเทศ ที่นั่งหลากหลาย จองได้ง่าย ปลอดภัย">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html" class="active">✈ หน้าหลัก</a></li>
+        <li><a href="history.html">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1><span class="highlight">Xfly-Anyway</span><br></h1>
+    <p>ค้นหาและจองตั๋วเครื่องบินราคาดีที่สุด เส้นทางในประเทศครบทุกจุดหมาย</p>
+
+    <!-- Search Form -->
+    <div class="search-form">
+      <form id="searchForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="fromAirport">🛫 ต้นทาง</label>
+            <select id="fromAirport" name="from">
+              <option value="">— ทุกต้นทาง —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="toAirport">🛬 ปลายทาง</label>
+            <select id="toAirport" name="to">
+              <option value="">— ทุกปลายทาง —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="travelDate">📅 วันที่เดินทาง</label>
+            <input type="date" id="travelDate" name="date">
+          </div>
+          <div class="form-group">
+            <label for="passengers">👥 ผู้โดยสาร</label>
+            <select id="passengers" name="passengers">
+              <option value="1">1 คน</option>
+              <option value="2">2 คน</option>
+              <option value="3">3 คน</option>
+              <option value="4">4 คน</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="visibility:hidden">Search</label>
+            <button type="submit" class="btn btn-primary" id="searchBtn">
+              🔍 ค้นหา
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══ PROMOTIONS SECTION ═══ -->
+  <section class="promo-section page-container" style="padding-top:0;padding-bottom:0">
+
+    <!-- Section Header -->
+    <div class="section-header" style="margin-bottom:4px">
+      <div>
+        <div class="section-title">🔥 โปรโมชั่นและดีลพิเศษ</div>
+        <div class="section-subtitle">บินแบบไหน เวลาไหน คุ้มที่สุด — อัปเดตทุกวัน</div>
+      </div>
+      <span style="font-size:12px;color:var(--text-muted)">*ราคาเริ่มต้น รวมภาษี</span>
+    </div>
+
+    <!-- Promo Cards -->
+    <div class="promo-grid">
+
+      <!-- Hot Deal -->
+      <div class="promo-card hot" onclick="selectPromo('XF101')">
+        <div class="promo-icon">🔥</div>
+        <div class="promo-timer">⏰ เหลือเวลา 2 วัน</div>
+        <div class="promo-badge hot">🔥 Flash Sale</div>
+        <div class="promo-route">BKK <span>→</span> CNX</div>
+        <div class="promo-desc">กรุงเทพ → เชียงใหม่<br>วันจันทร์–พุธ เที่ยวเช้า 06:00</div>
+        <div class="promo-footer">
+          <div class="promo-price">
+            <span class="promo-price-label">เริ่มต้น</span>
+            <span class="promo-price-value">฿899</span>
+            <span class="promo-price-original">฿1,290</span>
+          </div>
+          <div class="promo-save-badge">ลด 30%</div>
+        </div>
+      </div>
+
+      <!-- Best Value -->
+      <div class="promo-card best" onclick="selectPromo('XF202')">
+        <div class="promo-icon">⭐</div>
+        <div class="promo-badge best">⭐ คุ้มที่สุด</div>
+        <div class="promo-route">BKK <span>→</span> HKT</div>
+        <div class="promo-desc">กรุงเทพ → ภูเก็ต<br>เสาร์-อาทิตย์ คุ้มสุดในสัปดาห์</div>
+        <div class="promo-footer">
+          <div class="promo-price">
+            <span class="promo-price-label">เริ่มต้น</span>
+            <span class="promo-price-value">฿1,190</span>
+            <span class="promo-price-original">฿1,590</span>
+          </div>
+          <div class="promo-save-badge" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#000">ลด 25%</div>
+        </div>
+      </div>
+
+      <!-- Early Bird -->
+      <div class="promo-card early" onclick="selectPromo('XF303')">
+        <div class="promo-icon">🌅</div>
+        <div class="promo-badge early">🌅 Early Bird</div>
+        <div class="promo-route">BKK <span>→</span> USM</div>
+        <div class="promo-desc">กรุงเทพ → เกาะสมุย<br>จองล่วงหน้า 7 วัน รับส่วนลดพิเศษ</div>
+        <div class="promo-footer">
+          <div class="promo-price">
+            <span class="promo-price-label">เริ่มต้น</span>
+            <span class="promo-price-value">฿1,390</span>
+            <span class="promo-price-original">฿1,890</span>
+          </div>
+          <div class="promo-save-badge green">ลด 26%</div>
+        </div>
+      </div>
+
+      <!-- Night Owl -->
+      <div class="promo-card night" onclick="selectPromo('XF606')">
+        <div class="promo-icon">🌙</div>
+        <div class="promo-badge night">🌙 Night Deal</div>
+        <div class="promo-route">BKK <span>→</span> KBV</div>
+        <div class="promo-desc">กรุงเทพ → กระบี่<br>เที่ยวบินบ่ายโมง ราคาพิเศษสุด</div>
+        <div class="promo-footer">
+          <div class="promo-price">
+            <span class="promo-price-label">เริ่มต้น</span>
+            <span class="promo-price-value">฿990</span>
+            <span class="promo-price-original">฿1,490</span>
+          </div>
+          <div class="promo-save-badge purple">ลด 34%</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Best Time to Fly Tips -->
+    <div style="margin-top:28px">
+      <div class="section-title" style="font-size:16px;margin-bottom:4px">💡 เวลาไหนบินถูกที่สุด?</div>
+      <div class="section-subtitle" style="margin-bottom:0">เลือกเวลาบินให้ดี ประหยัดได้มากกว่า 30%</div>
+      <div class="tip-grid">
+        <div class="tip-card">
+          <div class="tip-icon">🌄</div>
+          <div>
+            <div class="tip-label">เที่ยวบินถูกสุด</div>
+            <div class="tip-value gold">06:00 – 08:00 น.</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📅</div>
+          <div>
+            <div class="tip-label">วันถูกสุด</div>
+            <div class="tip-value green">อังคาร & พุธ</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🗓</div>
+          <div>
+            <div class="tip-label">จองล่วงหน้า</div>
+            <div class="tip-value gold">7–14 วัน ประหยัด 20%+</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🚫</div>
+          <div>
+            <div class="tip-label">หลีกเลี่ยง</div>
+            <div class="tip-value" style="color:var(--danger)">ศุกร์–อาทิตย์ (แพงสุด)</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">✈️</div>
+          <div>
+            <div class="tip-label">เส้นทางคุ้มสุด</div>
+            <div class="tip-value gold">BKK → CNX เช้าตรู่</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💳</div>
+          <div>
+            <div class="tip-label">Business ราคาดี</div>
+            <div class="tip-value green">จันทร์–พุธ ช่วงเที่ยง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Flights List -->
+  <section class="page-container" id="flightsSection">
+    <div class="section-header">
+      <div>
+        <div class="section-title">🛩 เที่ยวบินทั้งหมด</div>
+        <div class="section-subtitle" id="flightCount">6 เที่ยวบิน</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span style="font-size:13px;color:var(--text-muted)">อัปเดตแบบ real-time</span>
+        <div class="spinner" style="width:16px;height:16px;"></div>
+      </div>
+    </div>
+    <div id="flightsList"></div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="page-container" style="padding-top:0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px">
+      <div class="card card-gold" style="text-align:center;padding:32px 20px">
+        <div style="font-size:40px;margin-bottom:12px">🔒</div>
+        <div style="font-weight:700;margin-bottom:6px">ระบบ Lock ที่นั่ง</div>
+        <div style="font-size:13px;color:var(--text-muted)">ล็อกที่นั่ง 10 นาทีระหว่างการจอง ไม่มีการจองซ้ำ</div>
+      </div>
+      <div class="card card-gold" style="text-align:center;padding:32px 20px">
+        <div style="font-size:40px;margin-bottom:12px">🪑</div>
+        <div style="font-weight:700;margin-bottom:6px">เลือกที่นั่งได้เอง</div>
+        <div style="font-size:13px;color:var(--text-muted)">ดูแผนผังที่นั่งแบบ Real-time เลือกได้ตามใจ</div>
+      </div>
+      <div class="card card-gold" style="text-align:center;padding:32px 20px">
+        <div style="font-size:40px;margin-bottom:12px">⚡</div>
+        <div style="font-weight:700;margin-bottom:6px">จองรวดเร็ว</div>
+        <div style="font-size:13px;color:var(--text-muted)">กระบวนการจองไม่เกิน 3 ขั้นตอน เสร็จใน 2 นาที</div>
+      </div>
+      <div class="card card-gold" style="text-align:center;padding:32px 20px">
+        <div style="font-size:40px;margin-bottom:12px">📋</div>
+        <div style="font-weight:700;margin-bottom:6px">ดูประวัติการจอง</div>
+        <div style="font-size:13px;color:var(--text-muted)">ติดตามทุกการจอง ยกเลิกได้ง่ายๆ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="margin-top:60px;padding:30px 40px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div><span style="color:var(--primary);font-weight:700">Xfly-Anyway Airlines</span> © 2026 — Premium Aviation Experience</div>
+    <div style="display:flex;gap:18px;align-items:center">
+      <a href="admin.html" style="color:var(--text-muted);text-decoration:none;font-size:12px;opacity:0.7;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+        🛡️ สำหรับเจ้าหน้าที่ (Admin Portal)
+      </a>
+      <a href="owner.html" style="color:var(--primary);text-decoration:none;font-size:12px;opacity:0.85;font-weight:600;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
+        👑 ระบบผู้บริหาร (Owner Portal)
+      </a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
+
+

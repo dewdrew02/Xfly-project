@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ข้อมูลผู้โดยสาร — Xfly-Anyway Airlines</title>
+  <meta name="description" content="กรอกข้อมูลผู้โดยสารสำหรับการจองตั๋วเครื่องบิน Xfly-Anyway Airlines">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html">✈ หน้าหลัก</a></li>
+        <li><a href="history.html">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <!-- Step Progress Bar -->
+    <div class="step-progress-wrapper">
+      <div class="step-progress">
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>1. ค้นหาเที่ยวบิน</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item active">
+          <span class="step-number">2</span>
+          <span>2. ข้อมูลผู้โดยสาร</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">3</span>
+          <span>3. เลือกที่นั่ง</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">4</span>
+          <span>4. สรุปข้อมูล</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">5</span>
+          <span>5. ชำระเงิน</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">6</span>
+          <span>6. บัตรโดยสาร</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header" style="margin-bottom:28px">
+      <a href="index.html" class="back-btn">←</a>
+      <div class="page-title">
+        <h1>👤 ข้อมูลผู้โดยสาร (Passenger Details)</h1>
+        <div class="subtitle">กรอกข้อมูลผู้เดินทางตามเอกสารราชการหรือหนังสือเดินทาง</div>
+      </div>
+    </div>
+
+    <!-- Flight Summary Bar -->
+    <div class="card card-gold" style="padding:20px 28px;margin-bottom:28px" id="selectedFlightBanner">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="font-size:32px">✈️</div>
+          <div>
+            <div style="font-size:12px;color:var(--text-muted);text-transform:uppercase">เที่ยวบินที่เลือก</div>
+            <div style="font-size:18px;font-weight:800;color:var(--primary)" id="bannerFlightNum">กำลังโหลด...</div>
+            <div style="font-size:13px;color:var(--text-secondary)" id="bannerRoute">—</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px">
+          <div>
+            <div style="font-size:12px;color:var(--text-muted)">เวลาเดินทาง</div>
+            <div style="font-size:15px;font-weight:700" id="bannerTime">—</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--text-muted)">ราคาเริ่มต้น</div>
+            <div style="font-size:18px;font-weight:800;color:var(--primary)" id="bannerPrice">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div style="max-width:800px;margin:0 auto">
+      <form id="passengerForm" autocomplete="off">
+        <div class="card" style="padding:32px">
+          <div class="form-section-title" style="font-size:18px;font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+            <span>📋</span> รายละเอียดข้อมูลผู้เดินทาง
+          </div>
+
+          <!-- Title & Names -->
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:16px;margin-bottom:20px">
+            <div class="form-group">
+              <label for="title">คำนำหน้า</label>
+              <select id="title" name="title" required>
+                <option value="นาย">นาย (Mr.)</option>
+                <option value="นาง">นาง (Mrs.)</option>
+                <option value="นางสาว">นางสาว (Ms.)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="firstName">ชื่อจริง (First Name)</label>
+              <input type="text" id="firstName" name="firstName" placeholder="สมชาย" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">นามสกุล (Last Name)</label>
+              <input type="text" id="lastName" name="lastName" placeholder="ใจดี" required>
+            </div>
+          </div>
+
+          <!-- Contact Details -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+            <div class="form-group">
+              <label for="email">อีเมล (สำหรับส่ง E-Ticket)</label>
+              <input type="email" id="email" name="email" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">หมายเลขโทรศัพท์มือถือ</label>
+              <input type="tel" id="phone" name="phone" placeholder="08X-XXX-XXXX" required>
+            </div>
+          </div>
+
+          <!-- Passport / National ID -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+            <div class="form-group">
+              <label for="idNumber">เลขประจำตัวประชาชน / หนังสือเดินทาง</label>
+              <input type="text" id="idNumber" name="idNumber" placeholder="1-XXXX-XXXXX-XX-X" required>
+            </div>
+            <div class="form-group">
+              <label for="dob">วันเกิด (Date of Birth)</label>
+              <input type="date" id="dob" name="dob">
+            </div>
+          </div>
+
+          <!-- Special Requests -->
+          <div class="form-group" style="margin-bottom:28px">
+            <label for="specialRequest">ความต้องการพิเศษ (ถ้ามี)</label>
+            <input type="text" id="specialRequest" name="specialRequest" placeholder="เช่น อาหารมังสวิรัติ, ต้องการวีลแชร์ เป็นต้น">
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:24px">
+            <a href="index.html" class="btn btn-ghost">← เปลี่ยนเที่ยวบิน</a>
+            <button type="submit" class="btn btn-primary btn-lg" id="nextToSeatBtn">
+              ถัดไป: เลือกที่นั่ง 🪑 →
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/passenger.js"></script>
+</body>
+</html>

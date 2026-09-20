@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ประวัติการจอง — Xfly-Anyway Airlines</title>
+  <meta name="description" content="ดูประวัติการจองตั๋วเครื่องบิน Xfly-Anyway Airlines ทั้งหมด">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html">✈ หน้าหลัก</a></li>
+        <li><a href="history.html" class="active">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <div class="page-header">
+      <a href="index.html" class="back-btn">←</a>
+      <div class="page-title">
+        <h1>📋 ประวัติการจอง</h1>
+        <div class="subtitle">รายการตั๋วทั้งหมดของคุณ</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="clearHistory()" title="ล้างประวัติ">🗑 ล้างทั้งหมด</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="history-stats">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">จองทั้งหมด</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statConfirmed">0</div>
+        <div class="stat-label">ยืนยันแล้ว</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statCancelled">0</div>
+        <div class="stat-label">ยกเลิกแล้ว</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statSpent" style="font-size:22px">฿0</div>
+        <div class="stat-label">ยอดรวม</div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+      <button class="btn btn-primary btn-sm filter-btn active" data-filter="all" onclick="setFilter('all')">
+        🎫 ทั้งหมด
+      </button>
+      <button class="btn btn-ghost btn-sm filter-btn" data-filter="confirmed" onclick="setFilter('confirmed')">
+        ✅ ยืนยันแล้ว
+      </button>
+      <button class="btn btn-ghost btn-sm filter-btn" data-filter="cancelled" onclick="setFilter('cancelled')">
+        ❌ ยกเลิกแล้ว
+      </button>
+    </div>
+
+    <!-- Bookings List -->
+    <div id="bookingsList"></div>
+
+    <!-- CTA -->
+    <div style="text-align:center;margin-top:40px;padding:32px;background:var(--bg-glass);border:1px solid var(--border-gold);border-radius:var(--radius-xl)">
+      <div style="font-size:32px;margin-bottom:12px">✈</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px">พร้อมบินไปไหนต่อ?</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:20px">ค้นหาเที่ยวบินใหม่และเลือกที่นั่งที่ชอบได้เลย</div>
+      <a href="index.html" class="btn btn-primary">🔍 ค้นหาเที่ยวบิน</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="margin-top:60px;padding:30px 40px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:13px">
+    <span style="color:var(--primary);font-weight:700">Xfly-Anyway Airlines</span> © 2026 — Premium Aviation Experience
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>
+
+

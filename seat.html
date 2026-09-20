@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เลือกที่นั่ง — Xfly-Anyway Airlines</title>
+  <meta name="description" content="เลือกที่นั่งบนเครื่องบิน X-Fly ดูแผนผังที่นั่งแบบ real-time">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <img src="assets/logo.jpg" alt="Xfly-Anyway Logo" class="navbar-logo">
+      <span class="navbar-brand-text">Xfly-Anyway</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:4px">
+      <ul class="navbar-nav">
+        <li><a href="index.html">✈ หน้าหลัก</a></li>
+        <li><a href="history.html">📋 ประวัติการจอง</a></li>
+      </ul>
+      <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <!-- Step Progress Bar -->
+    <div class="step-progress-wrapper">
+      <div class="step-progress">
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>1. ค้นหาเที่ยวบิน</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item done">
+          <span class="step-number">✓</span>
+          <span>2. ข้อมูลผู้โดยสาร</span>
+        </div>
+        <div class="step-divider done"></div>
+        <div class="step-item active">
+          <span class="step-number">3</span>
+          <span>3. เลือกที่นั่ง</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">4</span>
+          <span>4. สรุปข้อมูล</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">5</span>
+          <span>5. ชำระเงิน</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item">
+          <span class="step-number">6</span>
+          <span>6. บัตรโดยสาร</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <a href="passenger.html" class="back-btn">←</a>
+      <div class="page-title">
+        <h1>🪑 เลือกที่นั่ง (Seat Selection)</h1>
+        <div class="subtitle">เที่ยวบิน <span id="pageFlightId">—</span> &nbsp;|&nbsp; <span id="pageRoute">—</span> &nbsp;|&nbsp; ผู้โดยสาร: <strong id="passengerDisplayName" style="color:var(--primary)">—</strong></div>
+      </div>
+    </div>
+
+    <!-- Seat Count Bar -->
+    <div class="seat-legend" id="seatCountBar"></div>
+
+    <div class="seat-map-container">
+      <!-- Aircraft -->
+      <div class="aircraft-wrapper">
+        <div class="aircraft-nose">✈</div>
+        <div class="aircraft-body">
+          <div id="seatMapBody"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="seat-legend" style="margin-top:20px">
+          <div class="legend-item">
+            <div class="legend-dot available"></div> ว่าง
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot selected"></div> เลือกแล้ว
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot locked"></div> กำลังจอง ⏳
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot booked"></div> จองแล้ว
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="booking-sidebar">
+        <div class="sidebar-card gold">
+          <div class="sidebar-title">✈ ข้อมูลเที่ยวบิน</div>
+          <div id="flightInfoBar"></div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-title">👤 ผู้โดยสาร</div>
+          <div id="sidebarPassengerInfo" style="font-size:13px;line-height:1.8">
+            <!-- populated by js -->
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sidebar-title">📊 ราคาที่นั่ง</div>
+          <div class="flight-summary-row" style="padding:10px 0">
+            <div>
+              <span class="tag tag-business" style="margin-bottom:6px;display:inline-flex">✨ Business</span>
+              <div style="font-size:12px;color:var(--text-muted)">แถว 1–2 (แพงที่สุด)</div>
+            </div>
+            <div style="font-size:18px;font-weight:800;color:var(--primary)" id="businessPriceLabel">—</div>
+          </div>
+          <div class="flight-summary-row" style="padding:10px 0;border:none">
+            <div>
+              <span class="tag tag-economy" style="margin-bottom:6px;display:inline-flex">Economy</span>
+              <div style="font-size:12px;color:var(--text-muted)">แถว 3–12 (ราคาเริ่มต้น)</div>
+            </div>
+            <div style="font-size:18px;font-weight:800;color:var(--text-primary)" id="economyPriceLabel">—</div>
+          </div>
+        </div>
+
+        <div class="sidebar-card" style="background:rgba(255,215,0,0.03);border-color:rgba(255,215,0,0.15);text-align:center;padding:16px">
+          <div style="font-size:13px;color:var(--text-muted)">🔄 แผนผังอัปเดตอัตโนมัติทุก 5 วินาที</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Confirmation Modal -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+      <div class="modal-icon">🪑</div>
+      <div class="modal-title">ยืนยันการเลือกที่นั่ง</div>
+      <div class="modal-subtitle">คุณต้องการจองที่นั่งนี้ใช่ไหม?</div>
+
+      <div class="modal-seat-info">
+        <div class="seat-num" id="modalSeatNum">—</div>
+        <div style="font-size:14px;color:var(--text-muted);margin-top:6px" id="modalSeatClass">—</div>
+        <div style="font-size:22px;font-weight:800;color:var(--primary);margin-top:8px" id="modalPrice">—</div>
+      </div>
+
+      <div style="background:var(--warning-bg);border:1px solid rgba(255,140,0,.3);border-radius:var(--radius-md);padding:12px 16px;font-size:13px;color:var(--warning);margin-bottom:24px;display:flex;align-items:center;gap:8px">
+        ⏰ ระบบจะล็อกที่นั่งนี้เป็นเวลา 10 นาที ขณะที่คุณสรุปและชำระเงิน
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button>
+        <button class="btn btn-primary" id="confirmBookingBtn">ถัดไป: สรุปข้อมูลการจอง 📋 →</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/booking.js"></script>
+</body>
+</html>
