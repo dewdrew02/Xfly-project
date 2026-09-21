@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ประวัติการจอง — Xfly-Anyway Airlines</title>
-  <meta name="description" content="ดูประวัติการจองตั๋วเครื่องบิน Xfly-Anyway Airlines ทั้งหมด">
+  <title>ประวัติการจองล่าสุด — Xfly-Anyway Airlines</title>
+  <meta name="description" content="ดูประวัติการจองตั๋วเครื่องบินล่าสุดของคุณ E-Ticket">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
     <div style="display:flex;align-items:center;gap:4px">
       <ul class="navbar-nav">
         <li><a href="index.html">✈ หน้าหลัก</a></li>
-        <li><a href="history.html" class="active">📋 ประวัติการจอง</a></li>
+        <li><a href="history.html" class="active">📋 ประวัติการจองล่าสุด</a></li>
       </ul>
       <div id="navAuth" style="display:flex;align-items:center;gap:8px;margin-left:8px"></div>
     </div>
@@ -32,10 +32,16 @@
     <div class="page-header">
       <a href="index.html" class="back-btn">←</a>
       <div class="page-title">
-        <h1>📋 ประวัติการจอง</h1>
-        <div class="subtitle">รายการตั๋วทั้งหมดของคุณ</div>
+        <h1>📋 ประวัติการจองล่าสุด</h1>
+        <div class="subtitle">แสดงเฉพาะรายการตั๋วโดยสารล่าสุดของคุณ (E-Ticket)</div>
       </div>
-      <button class="btn btn-ghost btn-sm" onclick="clearHistory()" title="ล้างประวัติ">🗑 ล้างทั้งหมด</button>
+      <button class="btn btn-ghost btn-sm" onclick="clearHistory()" title="ล้างประวัติ">🗑 ล้างประวัติล่าสุด</button>
+    </div>
+
+    <!-- Notice banner: Showing only user's latest booking -->
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 18px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:var(--radius-md);margin-bottom:20px;font-size:13px;color:var(--primary)">
+      <span style="font-size:16px">💡</span>
+      <span>ระบบแสดงเฉพาะข้อมูลการจองล่าสุดของคุณ หากต้องการตรวจสอบบัตรโดยสาร กรุณากดปุ่ม <strong>"🎫 ดู E-Ticket"</strong></span>
     </div>
 
     <!-- Stats -->

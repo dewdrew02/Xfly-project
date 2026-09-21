@@ -210,8 +210,9 @@ async function completePayment(paymentMethod) {
   // Clear pending states
   if (timerInterval) clearInterval(timerInterval);
   sessionStorage.removeItem('pendingBooking');
-  sessionStorage.removeItem('passengerDraft');
   sessionStorage.setItem('lastBookingId', bookingId);
+  localStorage.setItem('xfly_last_booking_id', bookingId);
+  if (passenger.email) localStorage.setItem('xfly_last_booking_email', passenger.email.trim().toLowerCase());
 
   showToast('ชำระเงินสำเร็จ! กำลังออกตั๋วโดยสาร... 🎉', 'success', 1500);
   setTimeout(() => {

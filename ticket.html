@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>บัตรโดยสารอิเล็กทรอนิกส์ — Xfly-Anyway Airlines</title>
-  <meta name="description" content="บัตรโดยสารอิเล็กทรอนิกส์ Electronic Boarding Pass สำหรับเที่ยวบินของคุณ">
+  <title>บัตรโดยสารอิเล็กทรอนิกส์ (E-Ticket) — Xfly-Anyway Airlines</title>
+  <meta name="description" content="บัตรโดยสารอิเล็กทรอนิกส์ E-Ticket สำหรับเที่ยวบินของคุณ">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -29,33 +29,31 @@
   </nav>
 
   <div class="page-container">
-    <!-- Step Progress Bar -->
-    <div class="step-progress-wrapper">
-      <div class="step-progress">
-        <div class="step-item done">
-          <span class="step-number">✓</span>
-          <span>1. เลือกที่นั่ง</span>
-        </div>
-        <div class="step-divider done"></div>
-        <div class="step-item done">
-          <span class="step-number">✓</span>
-          <span>2. ข้อมูลผู้โดยสาร</span>
-        </div>
-        <div class="step-divider done"></div>
-        <div class="step-item done">
-          <span class="step-number">✓</span>
-          <span>3. สรุปข้อมูล</span>
-        </div>
-        <div class="step-divider done"></div>
-        <div class="step-item done">
-          <span class="step-number">✓</span>
-          <span>4. ชำระเงิน</span>
-        </div>
-        <div class="step-divider done"></div>
-        <div class="step-item active">
-          <span class="step-number">5</span>
-          <span>5. บัตรโดยสาร</span>
-        </div>
+    <!-- Progress Indicator -->
+    <div class="booking-progress">
+      <div class="progress-step completed">
+        <div class="step-num">✓</div>
+        <div class="step-label">1. เลือกที่นั่ง</div>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="progress-step completed">
+        <div class="step-num">✓</div>
+        <div class="step-label">2. ข้อมูลผู้โดยสาร</div>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="progress-step completed">
+        <div class="step-num">✓</div>
+        <div class="step-label">3. สรุปข้อมูล</div>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="progress-step completed">
+        <div class="step-num">✓</div>
+        <div class="step-label">4. ชำระเงิน</div>
+      </div>
+      <div class="progress-line completed"></div>
+      <div class="progress-step active">
+        <div class="step-num">5</div>
+        <div class="step-label">5. บัตรโดยสาร E-Ticket</div>
       </div>
     </div>
 
@@ -64,11 +62,11 @@
       <div style="font-size:48px;margin-bottom:8px">🎉</div>
       <h1 style="font-size:28px;font-weight:900;color:var(--text-primary)">การจองสำเร็จและออกบัตรโดยสารเรียบร้อย!</h1>
       <p style="color:var(--text-muted);font-size:14px;margin-top:4px">
-        ระบบได้บันทึกการเดินทางของคุณแล้ว สามารถพิมพ์หรือบันทึก Boarding Pass นี้ไว้เพื่อแสดง ณ วันเดินทาง
+        ระบบได้บันทึกการเดินทางของคุณแล้ว สามารถพิมพ์หรือบันทึก E-Ticket นี้ไว้เพื่อแสดง ณ วันเดินทาง
       </p>
     </div>
 
-    <!-- Boarding Pass Card Container -->
+    <!-- E-Ticket Card Container -->
     <div class="boarding-ticket" id="boardingPassCard">
       <!-- Main Pass -->
       <div class="ticket-main">
@@ -83,7 +81,7 @@
               <span style="font-weight:900;font-size:18px;color:var(--primary);letter-spacing:1px" id="ticketAirline">Xfly-Anyway Airlines</span>
             </div>
             <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px">
-              Boarding Pass / บัตรขึ้นเครื่องบิน
+              E-Ticket / บัตรโดยสารอิเล็กทรอนิกส์
             </div>
           </div>
           <div style="text-align:right">
@@ -146,10 +144,10 @@
       <!-- Ticket Stub (Right side) -->
       <div class="ticket-stub">
         <div>
-          <div style="font-size:12px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:12px">BOARDING PASS</div>
+          <div style="font-size:12px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:12px">E-TICKET</div>
           <div style="font-size:11px;color:var(--text-muted)">SEAT / ที่นั่ง</div>
           <div style="font-size:38px;font-weight:900;color:var(--primary);margin:4px 0" id="ticketSeat">—</div>
-          <span class="tag tag-gold" id="ticketClassTag" style="font-size:11px">Economy</span>
+          <span class="tag tag-gold" id="ticketClassTag" style="font-size:11px">Business Class</span>
         </div>
 
         <!-- Simulated Barcode / QR -->
@@ -183,10 +181,10 @@
     <!-- Action Toolbar -->
     <div style="max-width:780px;margin:32px auto 0;display:flex;justify-content:center;gap:16px;flex-wrap:wrap">
       <button class="btn btn-primary btn-lg" onclick="window.print()">
-        🖨️ พิมพ์บัตรโดยสาร (Print Boarding Pass)
+        🖨️ พิมพ์บัตรโดยสาร (Print E-Ticket)
       </button>
       <a href="history.html" class="btn btn-outline btn-lg">
-        📋 ดูประวัติการจองทั้งหมด
+        📋 ดูประวัติการจองล่าสุด
       </a>
       <a href="index.html" class="btn btn-ghost btn-lg">
         ✈️ ค้นหาเที่ยวบินใหม่

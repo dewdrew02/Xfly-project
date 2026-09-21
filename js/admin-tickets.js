@@ -112,7 +112,7 @@ function viewTicketModal(bookingId) {
       <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed var(--border);padding-bottom:14px;margin-bottom:16px">
         <div>
           <div style="font-weight:900;font-size:18px;color:var(--primary)">${booking.airlineName || 'X-FLY AIRLINES'}</div>
-          <div style="font-size:11px;color:var(--text-muted)">ELECTRONIC BOARDING PASS</div>
+          <div style="font-size:11px;color:var(--text-muted)">ELECTRONIC E-TICKET</div>
         </div>
         <div style="text-align:right">
           <div style="font-size:11px;color:var(--text-muted)">รหัสการจอง (PNR)</div>

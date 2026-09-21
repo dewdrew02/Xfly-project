@@ -129,12 +129,12 @@ ON CONFLICT (id) DO UPDATE SET
     seats_business = EXCLUDED.seats_business;
 
 -- ═══════════════════════════════════════════════════════════════
--- 5. BOOKINGS TABLE (การจองและตั๋วโดยสาร E-Boarding Pass)
+-- 5. BOOKINGS TABLE (การจองและตั๋วโดยสาร E-Ticket)
 -- ═══════════════════════════════════════════════════════════════
 CREATE TABLE IF NOT EXISTS public.bookings (
     id VARCHAR(50) PRIMARY KEY,
     user_id UUID,
-    flight_id VARCHAR(20),
+    flight_id VARCHAR(20),  
     airline_name VARCHAR(255) DEFAULT 'Xfly-Anyway Airlines',
     seat_id VARCHAR(10) NOT NULL,
     seat_class VARCHAR(50) DEFAULT 'business', -- 'first' (First Class 👑), 'business' (Business Class ✨)

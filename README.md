@@ -20,7 +20,7 @@ flowchart LR
 * **Step 2: Passenger (ข้อมูลผู้โดยสาร — passenger.html)** — กรอกคำนำหน้า, ชื่อ-นามสกุล, เบอร์โทร, อีเมล, หมายเลขบัตรประชาชน/หนังสือเดินทาง, วันเกิด, และความต้องการพิเศษ
 * **Step 3: Summary (สรุปข้อมูลการจอง — summary.html)** — ตรวจทานข้อมูลเที่ยวบิน, ข้อมูลผู้โดยสาร, เลขที่นั่ง และแจกแจงรายละเอียดค่าบริการ (ค่าตั๋ว, VAT 7%, ค่าธรรมเนียมสนามบิน) ก่อนชำระเงิน
 * **Step 4: Payment (ชำระเงิน — payment.html)** — รองรับทั้งระบบเงินสดและคริปโตเคอร์เรนซี: บัตรเครดิต/เดบิต, PromptPay QR Code, TrueMoney Wallet, **₿ Bitcoin (BTC)** และ **Ξ Ethereum (ETH)** พร้อมการคำนวณอัตราแลกเปลี่ยนแบบ Real-time, QR Code และปุ่มคัดลอก Wallet Address
-* **Step 5: Ticket (บัตรโดยสาร — ticket.html)** — ออกบัตรขึ้นเครื่องอิเล็กทรอนิกส์ (Electronic Boarding Pass) พร้อม QR Code, รหัสการจอง PNR, ชั้นที่นั่ง (First Class / Business Class), ช่องทางชำระเงิน และรองรับการสั่งพิมพ์ตั๋ว (`window.print()`)
+* **Step 5: Ticket (บัตรโดยสาร — ticket.html)** — ออกบัตรโดยสารอิเล็กทรอนิกส์ (E-Ticket) พร้อม QR Code, รหัสการจอง PNR, ชั้นที่นั่ง (First Class / Business Class), ช่องทางชำระเงิน และรองรับการสั่งพิมพ์ตั๋ว (`window.print()`)
 
 ---
 
@@ -64,8 +64,8 @@ Xfly-project/
 ├── seat.html               # [Customer] ผังเลือกที่นั่งบนเครื่องบิน (Seat Map Selection)
 ├── summary.html            # [Customer] สรุปข้อมูลการจองและคำนวณราคา (Booking Summary)
 ├── payment.html            # [Customer] ช่องทางชำระเงิน & ตัวนับเวลาถอยหลัง (Payment Gateway)
-├── ticket.html             # [Customer] บัตรโดยสารอิเล็กทรอนิกส์ (Digital Boarding Pass)
-├── history.html            # [Customer] ประวัติการจองของผู้ใช้ (Booking History)
+├── ticket.html             # [Customer] บัตรโดยสารอิเล็กทรอนิกส์ (Digital E-Ticket)
+├── history.html            # [Customer] ประวัติการจองล่าสุดของผู้ใช้ (Latest Booking History)
 │
 ├── admin.html              # [Admin] ประตูทางเข้าระบบ Admin & แผงควบคุมหลัก
 ├── admin/
@@ -83,8 +83,8 @@ Xfly-project/
 │   ├── booking.js          # จัดการผังที่นั่งและการล็อกที่นั่ง 10 นาทีใน seat.html
 │   ├── summary.js          # คำนวณราคา, VAT 7%, ค่าธรรมเนียมใน summary.html
 │   ├── payment.js          # จัดการระบบชำระเงินและบันทึกการออกตั๋วใน payment.html
-│   ├── ticket.js           # ดึงข้อมูลการจองมาแสดงเป็น Boarding Pass ใน ticket.html
-│   ├── history.js          # ดึงประวัติการจองและจัดการการยกเลิกใน history.html
+│   ├── ticket.js           # ดึงข้อมูลการจองมาแสดงเป็น E-Ticket ใน ticket.html
+│   ├── history.js          # ดึงประวัติการจองล่าสุดและจัดการการยกเลิกใน history.html
 │   │
 │   ├── admin.js            # ควบคุมระบบ Auth และสถิติ Dashboard ของ Admin
 │   ├── admin-flights.js    # โมดูล CRUD จัดการเที่ยวบิน (Manage Flight)
@@ -163,5 +163,5 @@ npx -y serve . -l 3000
 ## 💡 จุดเด่นและเทคโนโลยีที่ใช้ (Key Highlights)
 1. **Zero External Framework Dependency:** เขียนด้วย Vanilla HTML5, CSS3 (Modern Glassmorphism & Gold Theme), และ JavaScript ES6+ ทำให้โหลดเร็วและเปิดได้ทันทีโดยไม่ต้องติดตั้ง Build Tools ซับซ้อน
 2. **Real-time 10-Minute Seat Hold Mechanism:** ระบบล็อกที่นั่งชั่วคราว 10 นาทีระหว่างดำเนินการจองและชำระเงิน เพื่อป้องกันการจองที่นั่งซ้ำซ้อน
-3. **Print-ready E-Boarding Pass:** หน้าบัตรโดยสารรองรับการจัดวาง Layout และสั่งพิมพ์ (`window.print()`) หรือบันทึกเป็น PDF ได้ทันที
+3. **Print-ready E-Ticket:** หน้าบัตรโดยสารรองรับการจัดวาง Layout และสั่งพิมพ์ (`window.print()`) หรือบันทึกเป็น PDF ได้ทันที
 4. **Dynamic Data Layer & Two-Way Sync:** ข้อมูลสนามบิน, สายการบิน, เที่ยวบิน, แอดมิน และการจองทั้งหมดถูกเก็บและซิงค์แบบ Two-Way Real-time ผ่าน Storage Module ระหว่าง LocalStorage และ Supabase Cloud Database โดยอัตโนมัติ

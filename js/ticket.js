@@ -1,6 +1,6 @@
 /**
- * ticket.js — X-Fly Digital Boarding Pass Logic
- * Loads confirmed booking by ID and renders printable electronic ticket
+ * ticket.js — X-Fly Digital E-Ticket Logic
+ * Loads confirmed booking by ID and renders printable electronic ticket (E-Ticket)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bookingId = params.get('id') || sessionStorage.getItem('lastBookingId');
 
   if (!bookingId) {
-    showToast('ไม่พบรหัสบัตรโดยสาร', 'error');
+    showToast('ไม่พบรหัสบัตรโดยสาร E-Ticket', 'error');
     setTimeout(() => window.location.href = 'index.html', 1500);
     return;
   }
@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  renderBoardingPass(booking);
+  renderETicket(booking);
 });
 
-function renderBoardingPass(b) {
+function renderETicket(b) {
   const flight = Storage.getFlight(b.flightId) || b.flight || {};
 
   document.getElementById('ticketAirline').textContent = b.airlineName || flight.airlineName || 'Xfly-Anyway Airlines';
@@ -87,3 +87,7 @@ function renderBoardingPass(b) {
     payMethodEl.textContent = methodDisplay;
   }
 }
+
+// Backwards compatibility alias
+const renderBoardingPass = renderETicket;
+
