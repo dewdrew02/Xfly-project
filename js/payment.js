@@ -47,7 +47,7 @@ function renderSummary() {
   document.getElementById('sumPassenger').textContent = `${passenger.title || ''} ${passenger.firstName} ${passenger.lastName}`;
   document.getElementById('sumDeparture').textContent = `${flight.departure} → ${flight.arrival}`;
   document.getElementById('sumSeat').textContent = pending.seatId;
-  document.getElementById('sumClass').textContent = pending.seatClass === 'business' ? '✨ Business' : 'Economy';
+  document.getElementById('sumClass').textContent = pending.seatClass === 'first' ? '👑 First Class' : '✨ Business Class';
   document.getElementById('sumBasePrice').textContent = formatPrice(pending.price);
   document.getElementById('sumTax').textContent = formatPrice(Math.round(pending.price * 0.07));
   document.getElementById('sumTotal').textContent = formatPrice(total);
@@ -55,6 +55,14 @@ function renderSummary() {
   document.querySelectorAll('.pay-amount-label').forEach(el => {
     el.textContent = formatPrice(total);
   });
+
+  // Calculate crypto amounts
+  const btc = (total / 2450000).toFixed(6);
+  const eth = (total / 115000).toFixed(4);
+  const btcLabel = document.getElementById('btcAmountLabel');
+  const ethLabel = document.getElementById('ethAmountLabel');
+  if (btcLabel) btcLabel.textContent = `${btc} BTC`;
+  if (ethLabel) ethLabel.textContent = `${eth} ETH`;
 }
 
 function startTimer() {
@@ -90,7 +98,7 @@ function startTimer() {
 }
 
 function switchPaymentMethod(method) {
-  ['card', 'qr', 'bank'].forEach(m => {
+  ['card', 'qr', 'bank', 'btc', 'eth'].forEach(m => {
     const btn = document.getElementById(`method${m.charAt(0).toUpperCase() + m.slice(1)}Btn`);
     if (btn) btn.classList.toggle('active', m === method);
   });
@@ -98,6 +106,25 @@ function switchPaymentMethod(method) {
   document.getElementById('creditCardForm').style.display = method === 'card' ? 'block' : 'none';
   document.getElementById('qrPayView').style.display = method === 'qr' ? 'block' : 'none';
   document.getElementById('bankPayView').style.display = method === 'bank' ? 'block' : 'none';
+  const btcView = document.getElementById('btcPayView');
+  const ethView = document.getElementById('ethPayView');
+  if (btcView) btcView.style.display = method === 'btc' ? 'block' : 'none';
+  if (ethView) ethView.style.display = method === 'eth' ? 'block' : 'none';
+}
+
+function copyCryptoAddress(elementId, toastMsg) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const text = el.textContent.trim();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(toastMsg || 'คัดลอกที่อยู่กระเป๋าเงินแล้ว 📋', 'success');
+    }).catch(() => {
+      showToast(toastMsg || 'คัดลอกที่อยู่กระเป๋าเงินแล้ว 📋', 'success');
+    });
+  } else {
+    showToast(toastMsg || 'คัดลอกที่อยู่กระเป๋าเงินแล้ว 📋', 'success');
+  }
 }
 
 function setupCardForm() {

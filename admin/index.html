@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xfly-Anyway Airlines — ระบบผู้ดูแลระบบ (Admin Portal)</title>
+  <title>Xfly-Anyway Airlines — ระบบเจ้าหน้าที่ (Staff Portal)</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="../css/style.css">
   <style>
@@ -104,53 +104,75 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
-  <!-- 1. ADMIN LOGIN VIEW                                  -->
+  <!-- 1. STAFF LOGIN VIEW                                   -->
   <!-- ═══════════════════════════════════════════════════ -->
   <div id="adminLoginView" style="display:none;min-height:100vh;align-items:center;justify-content:center;padding:24px;">
-    <div class="card" style="max-width:440px;width:100%;padding:40px 36px;border-color:var(--border-gold);box-shadow:var(--shadow-glow);position:relative">
-      <div style="text-align:center;margin-bottom:24px">
-        <div style="font-size:44px;margin-bottom:8px">🛡️</div>
-        <div class="admin-badge" style="margin-bottom:12px">🔒 RESTRICTED AREA — ADMIN ONLY</div>
-        <h2 style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:6px">Xfly-Anyway Airlines</h2>
-        <p style="font-size:13px;color:var(--text-muted)">เข้าสู่ระบบแผงควบคุมผู้ดูแลระบบ</p>
+    <div class="card" style="max-width:460px;width:100%;padding:36px 32px;border-color:var(--border-gold);box-shadow:var(--shadow-glow);position:relative">
+      
+      <!-- Role Selector Tabs -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;text-align:center">
+          เลือกระดับผู้ใช้งานที่ต้องการเข้าสู่ระบบ
+        </div>
+        <div style="display:flex;background:rgba(0,0,0,0.5);border:1px solid var(--border-gold);border-radius:var(--radius-lg);padding:4px;gap:4px">
+          <button type="button" id="roleBtnOwner" onclick="selectLoginRole('owner')" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:4px">
+            👑 Owner
+          </button>
+          <button type="button" id="roleBtnStaff" onclick="selectLoginRole('staff')" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:rgba(212,175,55,0.25);color:var(--primary);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:4px">
+            🛡️ Staff
+          </button>
+          <button type="button" id="roleBtnTicket" onclick="selectLoginRole('ticket')" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:4px">
+            🎫 Ticket
+          </button>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-bottom:20px">
+        <div id="loginRoleIcon" style="font-size:40px;margin-bottom:6px">🛡️</div>
+        <div id="loginRoleBadge" class="admin-badge" style="margin-bottom:10px">🔒 RESTRICTED AREA — STAFF ONLY</div>
+        <h2 id="loginPortalTitle" style="font-size:22px;font-weight:800;color:var(--text-primary);margin-bottom:4px">Xfly-Anyway Airlines</h2>
+        <p id="loginPortalSubtitle" style="font-size:13px;color:var(--text-muted);margin:0">เข้าสู่ระบบแผงควบคุมเจ้าหน้าที่ (Staff Operations)</p>
       </div>
 
       <form id="adminLoginForm" autocomplete="off">
-        <div class="form-group" style="margin-bottom:16px">
-          <label for="adminEmail">📧 บัญชีผู้ดูแลระบบ (Email)</label>
-          <input type="email" id="adminEmail" placeholder="admin@xfly.com" required value="admin@xfly.com">
+        <div class="form-group" style="margin-bottom:14px">
+          <label for="adminEmail" id="loginEmailLabel">📧 บัญชีเจ้าหน้าที่ (Staff Email)</label>
+          <input type="email" id="adminEmail" placeholder="staff@xfly.com" required value="staff@xfly.com">
         </div>
 
         <div class="form-group" style="margin-bottom:12px">
-          <label for="adminPassword">🔒 รหัสผ่าน (Password)</label>
+          <label for="adminPassword" id="loginPasswordLabel">🔒 รหัสผ่าน (Password)</label>
           <div style="position:relative">
-            <input type="password" id="adminPassword" placeholder="••••••••" required value="admin1234">
+            <input type="password" id="adminPassword" placeholder="••••••••" required value="staff1234">
             <button type="button" onclick="toggleAdminPassword()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px">👁</button>
           </div>
         </div>
 
-        <div id="adminLoginError" class="auth-error hidden" style="margin-bottom:16px"></div>
+        <div id="adminLoginError" class="auth-error hidden" style="margin-bottom:14px"></div>
 
-        <button type="submit" class="btn btn-primary w-full" id="adminLoginBtn" style="padding:14px;font-weight:700">
-          🚀 เข้าสู่ระบบ Admin
+        <button type="submit" class="btn btn-primary w-full" id="adminLoginBtn" style="padding:13px;font-weight:800;font-size:15px">
+          🚀 เข้าสู่ระบบ Staff
         </button>
       </form>
 
-      <div style="margin-top:20px;padding:12px 16px;background:rgba(212,175,55,0.05);border:1px dashed var(--border-gold);border-radius:var(--radius-md);font-size:12px;color:var(--text-muted);line-height:1.6">
-        <div>🛡️ <strong>เฉพาะบัญชีเจ้าหน้าที่ดูแลระบบ (Admin Only):</strong></div>
-        <div>อีเมล: <code style="color:var(--primary)">admin@xfly.com</code> | รหัสผ่าน: <code style="color:var(--primary)">admin1234</code></div>
-        <div style="margin-top:6px;font-size:11px;color:var(--text-muted)">⚠️ <em>สำหรับผู้บริหาร ให้เข้าสู่ระบบด้วยบัญชี Owner ที่ <a href="../owner.html" style="color:var(--primary);text-decoration:underline">Owner Portal</a></em></div>
+      <!-- Dynamic Role Credential Hint & Autofill -->
+      <div id="loginCredHintBox" style="margin-top:16px;padding:12px 14px;background:rgba(212,175,55,0.06);border:1px dashed var(--border-gold);border-radius:var(--radius-md);font-size:12px;color:var(--text-muted);line-height:1.6">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span id="hintRoleTitle">🛡️ <strong>ข้อมูลล็อกอินเจ้าหน้าที่ (Staff):</strong></span>
+          <button type="button" class="btn btn-outline btn-sm" onclick="quickFillCurrentRole()" style="padding:2px 8px;font-size:11px">⚡ กรอกข้อมูลด่วน</button>
+        </div>
+        <div id="hintRoleCredentials">อีเมล: <code style="color:var(--primary)">staff@xfly.com</code> | รหัสผ่าน: <code style="color:var(--primary)">staff1234</code></div>
       </div>
 
-      <div style="text-align:center;margin-top:24px;display:flex;justify-content:center;gap:16px">
-        <a href="../index.html" class="btn-link" style="font-size:13px">← หน้าหลัก</a>
-        <a href="../owner.html" class="btn-link" style="font-size:13px;color:var(--primary)">👑 เจ้าของระบบ (Owner) →</a>
+      <div style="text-align:center;margin-top:20px;display:flex;justify-content:center;gap:16px">
+        <a href="../index.html" class="btn-link" style="font-size:13px">← หน้าหลักเว็บไซต์</a>
+        <a href="../owner.html" class="btn-link" style="font-size:13px;color:var(--primary)">👑 หน้า Owner Console →</a>
       </div>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
-  <!-- 2. ADMIN DASHBOARD & MANAGEMENT PORTAL               -->
+  <!-- 2. STAFF DASHBOARD & MANAGEMENT PORTAL                -->
   <!-- ═══════════════════════════════════════════════════ -->
   <div id="adminDashboardView" style="display:none;min-height:100vh;flex-direction:column">
 
@@ -162,7 +184,7 @@
           <span class="navbar-brand-text">Xfly-Anyway</span>
         </a>
         <span class="admin-badge live">
-          <span class="pulse-dot"></span> ADMIN PORTAL
+          <span class="pulse-dot"></span> STAFF PORTAL
         </span>
       </div>
 

@@ -17,6 +17,7 @@ const STORAGE_KEYS = {
 
 // Default Seed Datasets
 const DEFAULT_AIRPORTS = [
+  // Domestic (Thailand)
   { code: 'BKK', name: 'Suvarnabhumi International Airport', city: 'Bangkok', country: 'Thailand', active: true },
   { code: 'DMK', name: 'Don Mueang International Airport', city: 'Bangkok', country: 'Thailand', active: true },
   { code: 'CNX', name: 'Chiang Mai International Airport', city: 'Chiang Mai', country: 'Thailand', active: true },
@@ -24,7 +25,16 @@ const DEFAULT_AIRPORTS = [
   { code: 'USM', name: 'Samui International Airport', city: 'Koh Samui', country: 'Thailand', active: true },
   { code: 'KBV', name: 'Krabi International Airport', city: 'Krabi', country: 'Thailand', active: true },
   { code: 'UTH', name: 'Udon Thani International Airport', city: 'Udon Thani', country: 'Thailand', active: true },
-  { code: 'CEI', name: 'Mae Fah Luang - Chiang Rai Airport', city: 'Chiang Rai', country: 'Thailand', active: true }
+  { code: 'CEI', name: 'Mae Fah Luang - Chiang Rai Airport', city: 'Chiang Rai', country: 'Thailand', active: true },
+  // International (ต่างประเทศ)
+  { code: 'NRT', name: 'Narita International Airport', city: 'Tokyo', country: 'Japan', active: true },
+  { code: 'HND', name: 'Haneda International Airport', city: 'Tokyo', country: 'Japan', active: true },
+  { code: 'SIN', name: 'Singapore Changi Airport', city: 'Singapore', country: 'Singapore', active: true },
+  { code: 'ICN', name: 'Incheon International Airport', city: 'Seoul', country: 'South Korea', active: true },
+  { code: 'LHR', name: 'Heathrow Airport', city: 'London', country: 'United Kingdom', active: true },
+  { code: 'CDG', name: 'Charles de Gaulle Airport', city: 'Paris', country: 'France', active: true },
+  { code: 'HKG', name: 'Hong Kong International Airport', city: 'Hong Kong', country: 'Hong Kong', active: true },
+  { code: 'TPE', name: 'Taiwan Taoyuan Airport', city: 'Taipei', country: 'Taiwan', active: true }
 ];
 
 const DEFAULT_AIRLINES = [
@@ -35,6 +45,7 @@ const DEFAULT_AIRLINES = [
 ];
 
 const DEFAULT_FLIGHTS = [
+  // Domestic Routes
   {
     id: 'XF101',
     airlineCode: 'XF',
@@ -45,7 +56,7 @@ const DEFAULT_FLIGHTS = [
     arrival: '07:15',
     duration: '1h 15m',
     price: 1290,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
   },
   {
     id: 'XF202',
@@ -57,7 +68,7 @@ const DEFAULT_FLIGHTS = [
     arrival: '09:45',
     duration: '1h 15m',
     price: 1590,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
   },
   {
     id: 'XF303',
@@ -69,7 +80,7 @@ const DEFAULT_FLIGHTS = [
     arrival: '11:20',
     duration: '1h 20m',
     price: 1890,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
   },
   {
     id: 'XF404',
@@ -81,7 +92,7 @@ const DEFAULT_FLIGHTS = [
     arrival: '14:15',
     duration: '1h 15m',
     price: 1350,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
   },
   {
     id: 'XF505',
@@ -93,7 +104,7 @@ const DEFAULT_FLIGHTS = [
     arrival: '16:45',
     duration: '1h 15m',
     price: 1650,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
   },
   {
     id: 'XF606',
@@ -105,17 +116,110 @@ const DEFAULT_FLIGHTS = [
     arrival: '18:20',
     duration: '1h 20m',
     price: 1490,
-    seats: { business: 4, economy: 30 }
+    seats: { first: 12, business: 60 }
+  },
+  // International Routes (ต่างประเทศ)
+  {
+    id: 'XF701',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    to: { code: 'NRT', city: 'Tokyo', name: 'Narita Intl' },
+    departure: '08:00',
+    arrival: '16:30',
+    duration: '6h 30m',
+    price: 8900,
+    seats: { first: 12, business: 60 }
+  },
+  {
+    id: 'XF702',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'NRT', city: 'Tokyo', name: 'Narita Intl' },
+    to: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    departure: '18:00',
+    arrival: '23:00',
+    duration: '7h 00m',
+    price: 9200,
+    seats: { first: 12, business: 60 }
+  },
+  {
+    id: 'XF801',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    to: { code: 'SIN', city: 'Singapore', name: 'Changi Intl' },
+    departure: '09:30',
+    arrival: '13:00',
+    duration: '2h 30m',
+    price: 3450,
+    seats: { first: 12, business: 60 }
+  },
+  {
+    id: 'XF802',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'SIN', city: 'Singapore', name: 'Changi Intl' },
+    to: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    departure: '14:30',
+    arrival: '16:00',
+    duration: '2h 30m',
+    price: 3450,
+    seats: { first: 12, business: 60 }
+  },
+  {
+    id: 'XF901',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    to: { code: 'ICN', city: 'Seoul', name: 'Incheon Intl' },
+    departure: '23:30',
+    arrival: '07:00',
+    duration: '5h 30m',
+    price: 7800,
+    seats: { first: 12, business: 60 }
+  },
+  {
+    id: 'XF951',
+    airlineCode: 'XF',
+    airlineName: 'Xfly-Anyway Airlines',
+    from: { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi' },
+    to: { code: 'LHR', city: 'London', name: 'Heathrow' },
+    departure: '01:15',
+    arrival: '07:45',
+    duration: '12h 30m',
+    price: 18900,
+    seats: { first: 12, business: 60 }
   }
 ];
 
 const DEFAULT_ADMINS = [
   {
+    id: 'STF-001',
+    name: 'X-Fly Operations Staff',
+    email: 'staff@xfly.com',
+    password: 'staff1234',
+    role: 'staff',
+    department: 'Airport Ground & Flight Ops',
+    status: 'active',
+    createdAt: '2026-01-10T08:00:00.000Z'
+  },
+  {
+    id: 'STF-T01',
+    name: 'Ticket Officer (เจ้าหน้าที่ตรวจสอบตั๋ว)',
+    email: 'ticket@xfly.com',
+    password: 'ticket1234',
+    role: 'ticket',
+    department: 'Passenger & Ticket Services',
+    status: 'active',
+    createdAt: '2026-02-15T08:00:00.000Z'
+  },
+  {
     id: 'ADM-001',
     name: 'System Administrator',
     email: 'admin@xfly.com',
     password: 'admin1234',
-    role: 'superadmin',
+    role: 'staff_lead',
     department: 'Central IT & Operations',
     status: 'active',
     createdAt: '2026-01-15T09:00:00.000Z'
@@ -124,8 +228,8 @@ const DEFAULT_ADMINS = [
     id: 'ADM-002',
     name: 'Flight Operations Lead',
     email: 'ops@xfly.com',
-    password: 'admin1234',
-    role: 'ops_admin',
+    password: 'staff1234',
+    role: 'staff',
     department: 'Flight Control',
     status: 'active',
     createdAt: '2026-02-01T10:30:00.000Z'
@@ -155,18 +259,50 @@ const Storage = {
     if (!localStorage.getItem(STORAGE_KEYS.BOOKINGS)) {
       localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify([]));
     }
-    if (!localStorage.getItem(STORAGE_KEYS.AIRPORTS)) {
-      localStorage.setItem(STORAGE_KEYS.AIRPORTS, JSON.stringify(DEFAULT_AIRPORTS));
+
+    // Merge missing airports (ensuring international destinations appear)
+    const existingAirports = JSON.parse(localStorage.getItem(STORAGE_KEYS.AIRPORTS) || '[]');
+    let airportsUpdated = false;
+    DEFAULT_AIRPORTS.forEach(da => {
+      if (!existingAirports.some(ea => ea.code === da.code)) {
+        existingAirports.push(da);
+        airportsUpdated = true;
+      }
+    });
+    if (airportsUpdated || !localStorage.getItem(STORAGE_KEYS.AIRPORTS)) {
+      localStorage.setItem(STORAGE_KEYS.AIRPORTS, JSON.stringify(existingAirports.length ? existingAirports : DEFAULT_AIRPORTS));
     }
+
     if (!localStorage.getItem(STORAGE_KEYS.AIRLINES)) {
       localStorage.setItem(STORAGE_KEYS.AIRLINES, JSON.stringify(DEFAULT_AIRLINES));
     }
-    if (!localStorage.getItem(STORAGE_KEYS.FLIGHTS)) {
-      localStorage.setItem(STORAGE_KEYS.FLIGHTS, JSON.stringify(DEFAULT_FLIGHTS));
+
+    // Merge missing flights (ensuring international flights appear)
+    const existingFlights = JSON.parse(localStorage.getItem(STORAGE_KEYS.FLIGHTS) || '[]');
+    let flightsUpdated = false;
+    DEFAULT_FLIGHTS.forEach(df => {
+      if (!existingFlights.some(ef => ef.id === df.id)) {
+        existingFlights.push(df);
+        flightsUpdated = true;
+      }
+    });
+    if (flightsUpdated || !localStorage.getItem(STORAGE_KEYS.FLIGHTS)) {
+      localStorage.setItem(STORAGE_KEYS.FLIGHTS, JSON.stringify(existingFlights.length ? existingFlights : DEFAULT_FLIGHTS));
     }
-    if (!localStorage.getItem(STORAGE_KEYS.ADMINS)) {
-      localStorage.setItem(STORAGE_KEYS.ADMINS, JSON.stringify(DEFAULT_ADMINS));
+
+    // Merge missing staff/ticket accounts
+    const existingAdmins = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADMINS) || '[]');
+    let adminsUpdated = false;
+    DEFAULT_ADMINS.forEach(da => {
+      if (!existingAdmins.some(ea => ea.email.toLowerCase() === da.email.toLowerCase())) {
+        existingAdmins.push(da);
+        adminsUpdated = true;
+      }
+    });
+    if (adminsUpdated || !localStorage.getItem(STORAGE_KEYS.ADMINS)) {
+      localStorage.setItem(STORAGE_KEYS.ADMINS, JSON.stringify(existingAdmins.length ? existingAdmins : DEFAULT_ADMINS));
     }
+
     if (!localStorage.getItem(STORAGE_KEYS.OWNERS)) {
       localStorage.setItem(STORAGE_KEYS.OWNERS, JSON.stringify(DEFAULT_OWNERS));
     }
@@ -332,10 +468,23 @@ const Storage = {
     return true;
   },
 
-  // ─── Airports (CRUD) ───────────────────────────────────────
   getAirports() {
     const data = localStorage.getItem(STORAGE_KEYS.AIRPORTS);
-    return data ? JSON.parse(data) : DEFAULT_AIRPORTS;
+    if (!data) return DEFAULT_AIRPORTS;
+    try {
+      const list = JSON.parse(data);
+      let changed = false;
+      DEFAULT_AIRPORTS.forEach(da => {
+        if (!list.some(a => a.code === da.code)) {
+          list.push(da);
+          changed = true;
+        }
+      });
+      if (changed) localStorage.setItem(STORAGE_KEYS.AIRPORTS, JSON.stringify(list));
+      return list;
+    } catch(e) {
+      return DEFAULT_AIRPORTS;
+    }
   },
 
   saveAirport(airport) {
@@ -423,10 +572,23 @@ const Storage = {
     return true;
   },
 
-  // ─── Flights (CRUD) ────────────────────────────────────────
   getFlights() {
     const data = localStorage.getItem(STORAGE_KEYS.FLIGHTS);
-    return data ? JSON.parse(data) : DEFAULT_FLIGHTS;
+    if (!data) return DEFAULT_FLIGHTS;
+    try {
+      const list = JSON.parse(data);
+      let changed = false;
+      DEFAULT_FLIGHTS.forEach(df => {
+        if (!list.some(f => f.id === df.id)) {
+          list.push(df);
+          changed = true;
+        }
+      });
+      if (changed) localStorage.setItem(STORAGE_KEYS.FLIGHTS, JSON.stringify(list));
+      return list;
+    } catch(e) {
+      return DEFAULT_FLIGHTS;
+    }
   },
 
   getFlight(flightId) {
@@ -482,7 +644,21 @@ const Storage = {
   // ─── Admins (CRUD) ─────────────────────────────────────────
   getAdmins() {
     const data = localStorage.getItem(STORAGE_KEYS.ADMINS);
-    return data ? JSON.parse(data) : DEFAULT_ADMINS;
+    if (!data) return DEFAULT_ADMINS;
+    try {
+      const list = JSON.parse(data);
+      let changed = false;
+      DEFAULT_ADMINS.forEach(da => {
+        if (!list.some(a => a.email.toLowerCase() === da.email.toLowerCase())) {
+          list.push(da);
+          changed = true;
+        }
+      });
+      if (changed) localStorage.setItem(STORAGE_KEYS.ADMINS, JSON.stringify(list));
+      return list;
+    } catch(e) {
+      return DEFAULT_ADMINS;
+    }
   },
 
   saveAdmin(admin) {
@@ -531,17 +707,32 @@ const Storage = {
     return true;
   },
 
-  // ─── Admin Verification ────────────────────────────────────
+  // ─── Admin / Staff / Ticket Verification ────────────────────────────
   verifyAdmin(email, password) {
     const admins = this.getAdmins();
     const cleanEmail = (email || '').trim().toLowerCase();
     const cleanPass = (password || '').trim();
 
     return admins.find(a =>
-      (a.email.toLowerCase() === cleanEmail || (cleanEmail === 'admin' && a.email.toLowerCase() === 'admin@xfly.com')) &&
+      (a.email.toLowerCase() === cleanEmail ||
+       (cleanEmail === 'admin' && a.email.toLowerCase() === 'admin@xfly.com') ||
+       (cleanEmail === 'staff' && a.email.toLowerCase() === 'staff@xfly.com') ||
+       (cleanEmail === 'ticket' && a.email.toLowerCase() === 'ticket@xfly.com')) &&
       a.password === cleanPass &&
       a.status === 'active'
     ) || null;
+  },
+
+  verifyStaff(email, password) {
+    return this.verifyAdmin(email, password);
+  },
+
+  verifyTicketOfficer(email, password) {
+    const user = this.verifyAdmin(email, password);
+    if (user && (user.role === 'ticket' || user.email.toLowerCase() === 'ticket@xfly.com')) {
+      return user;
+    }
+    return null;
   },
 
   // ─── Owners (Auth & Management) ────────────────────────────

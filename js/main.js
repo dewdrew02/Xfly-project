@@ -3,6 +3,8 @@
  * Search and display flights
  */
 
+let currentCategory = 'all';
+
 document.addEventListener('DOMContentLoaded', () => {
   Storage.init();
   populateAirports();
@@ -13,26 +15,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function populateAirports() {
   const airports = Storage.getAirports();
+  const domestic = airports.filter(a => a.country === 'Thailand');
+  const international = airports.filter(a => a.country !== 'Thailand');
+
   ['fromAirport','toAirport'].forEach(id => {
     const sel = document.getElementById(id);
     if (!sel) return;
     sel.innerHTML = `<option value="">— ${id === 'fromAirport' ? 'ทุกต้นทาง' : 'ทุกปลายทาง'} —</option>`;
-    airports.forEach(a => {
-      const opt = document.createElement('option');
-      opt.value = a.code;
-      opt.textContent = `${a.code} — ${a.city} (${a.name})`;
-      sel.appendChild(opt);
-    });
+
+    if (domestic.length > 0) {
+      const optGroupDom = document.createElement('optgroup');
+      optGroupDom.label = '🇹🇭 เส้นทางในประเทศ (Domestic)';
+      domestic.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.code;
+        opt.textContent = `${a.code} — ${a.city} (${a.name})`;
+        optGroupDom.appendChild(opt);
+      });
+      sel.appendChild(optGroupDom);
+    }
+
+    if (international.length > 0) {
+      const optGroupIntl = document.createElement('optgroup');
+      optGroupIntl.label = '🌐 เส้นทางต่างประเทศ (International)';
+      international.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.code;
+        opt.textContent = `${a.code} — ${a.city}, ${a.country} (${a.name})`;
+        optGroupIntl.appendChild(opt);
+      });
+      sel.appendChild(optGroupIntl);
+    }
   });
+}
+
+function filterFlightsByCategory(cat) {
+  currentCategory = cat;
+  ['catBtnAll', 'catBtnDomestic', 'catBtnInternational'].forEach(id => {
+    const b = document.getElementById(id);
+    if (!b) return;
+    b.classList.remove('btn-primary');
+    b.classList.add('btn-outline');
+  });
+
+  const activeBtn = document.getElementById(
+    cat === 'domestic' ? 'catBtnDomestic' :
+    cat === 'international' ? 'catBtnInternational' : 'catBtnAll'
+  );
+  if (activeBtn) {
+    activeBtn.classList.add('btn-primary');
+    activeBtn.classList.remove('btn-outline');
+  }
+
+  const allFlights = Storage.getFlights();
+  const airports = Storage.getAirports();
+  const thCodes = airports.filter(a => a.country === 'Thailand').map(a => a.code);
+
+  let filtered = allFlights;
+  if (cat === 'domestic') {
+    filtered = allFlights.filter(f => thCodes.includes(f.from.code) && thCodes.includes(f.to.code));
+  } else if (cat === 'international') {
+    filtered = allFlights.filter(f => !thCodes.includes(f.from.code) || !thCodes.includes(f.to.code));
+  }
+
+  renderAllFlights(filtered);
 }
 
 function renderAllFlights(filtered = null) {
   const container = document.getElementById('flightsList');
-  const section = document.getElementById('flightsSection');
   const countEl = document.getElementById('flightCount');
   if (!container) return;
 
-  const flights = filtered !== null ? filtered : FLIGHTS;
+  const allFlights = Storage.getFlights();
+  const flights = filtered !== null ? filtered : allFlights;
 
   if (countEl) countEl.textContent = `${flights.length} เที่ยวบิน`;
 
@@ -50,7 +105,7 @@ function renderAllFlights(filtered = null) {
   container.innerHTML = flights.map((f, i) => {
     const seats = getAllSeatsForFlight(f.id);
     const available = seats.available;
-    const total = f.seats.business + f.seats.economy;
+    const total = (f.seats?.first || 12) + (f.seats?.business || 60);
     const minPrice = f.price;
     const maxPrice = Math.round(f.price * 2.5);
 
@@ -84,9 +139,9 @@ function renderAllFlights(filtered = null) {
       </div>
 
       <div class="flight-price-section">
-        <div class="flight-price-label">ราคาเริ่มต้น – แพงที่สุด</div>
+        <div class="flight-price-label">ราคาเริ่มต้น (Business – First)</div>
         <div class="flight-price">${formatPrice(minPrice)} – ${formatPrice(maxPrice)}</div>
-        <div class="flight-price-sub">Economy – Business</div>
+        <div class="flight-price-sub">✨ Business – 👑 First Class</div>
         <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="event.stopPropagation();selectFlight('${f.id}')">
           🪑 เลือกที่นั่ง
         </button>
@@ -98,10 +153,10 @@ function renderAllFlights(filtered = null) {
 function getAllSeatsForFlight(flightId) {
   Storage.cleanExpiredLocks();
   const allSeats = Storage.getAllSeats();
-  const flight = FLIGHTS.find(f => f.id === flightId);
+  const flight = Storage.getFlight(flightId);
   if (!flight) return { available: 0, booked: 0, locked: 0 };
 
-  const total = flight.seats.business + flight.seats.economy;
+  const total = (flight.seats?.first || 12) + (flight.seats?.business || 60);
   let booked = 0, locked = 0;
 
   Object.keys(allSeats).forEach(key => {
@@ -140,7 +195,7 @@ function setupSearch() {
       return;
     }
 
-    let filtered = FLIGHTS;
+    let filtered = Storage.getFlights();
     if (from) filtered = filtered.filter(f => f.from.code === from);
     if (to) filtered = filtered.filter(f => f.to.code === to);
 

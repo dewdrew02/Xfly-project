@@ -63,9 +63,9 @@ function renderBookingsList(allBookings, filter = 'all') {
       ? '<div class="booking-status confirmed">✅ ยืนยันแล้ว</div>'
       : '<div class="booking-status cancelled">❌ ยกเลิกแล้ว</div>';
 
-    const classTag = booking.seatClass === 'business'
-      ? '<span class="tag tag-business">✨ Business</span>'
-      : '<span class="tag tag-economy">Economy</span>';
+    const classTag = booking.seatClass === 'first'
+      ? '<span class="tag tag-first">👑 First Class</span>'
+      : '<span class="tag tag-business">✨ Business Class</span>';
 
     return `
     <div class="booking-card animate-in" id="booking-${booking.id}">

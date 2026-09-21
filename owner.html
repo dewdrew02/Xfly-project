@@ -94,16 +94,35 @@
   <!-- 1. OWNER LOGIN VIEW                                  -->
   <!-- ═══════════════════════════════════════════════════ -->
   <div id="ownerLoginView" style="display:none;min-height:100vh;align-items:center;justify-content:center;padding:24px;">
-    <div class="card" style="max-width:440px;width:100%;padding:40px 36px;border:2px solid var(--primary);box-shadow:var(--shadow-gold);position:relative">
-      <div style="text-align:center;margin-bottom:24px">
-        <div style="font-size:48px;margin-bottom:8px">👑</div>
-        <div class="owner-badge" style="margin-bottom:12px">EXECUTIVE OWNER PORTAL</div>
-        <h2 style="font-size:24px;font-weight:900;color:#fff;margin-bottom:4px">X-FLY EXECUTIVE</h2>
-        <p style="font-size:13px;color:var(--text-muted)">เข้าสู่ระบบสำหรับเจ้าของกิจการและผู้บริหารสูงสุด</p>
+    <div class="card" style="max-width:460px;width:100%;padding:36px 32px;border:2px solid var(--primary);box-shadow:var(--shadow-gold);position:relative">
+      
+      <!-- Role Selector Tabs -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;text-align:center">
+          เลือกระดับผู้ใช้งานที่ต้องการเข้าสู่ระบบ
+        </div>
+        <div style="display:flex;background:rgba(0,0,0,0.5);border:1px solid var(--border-gold);border-radius:var(--radius-lg);padding:4px;gap:4px">
+          <button type="button" class="role-tab-btn" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:rgba(212,175,55,0.25);color:var(--primary);font-weight:700;font-size:13px;cursor:pointer">
+            👑 Owner
+          </button>
+          <button type="button" class="role-tab-btn" onclick="window.location.href='staff.html'" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:13px;cursor:pointer">
+            🛡️ Staff
+          </button>
+          <button type="button" class="role-tab-btn" onclick="window.location.href='admin.html?role=ticket'" style="flex:1;padding:9px 6px;border-radius:var(--radius-md);border:none;background:transparent;color:var(--text-muted);font-weight:700;font-size:13px;cursor:pointer">
+            🎫 Ticket
+          </button>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:44px;margin-bottom:6px">👑</div>
+        <div class="owner-badge" style="margin-bottom:10px">EXECUTIVE OWNER PORTAL</div>
+        <h2 style="font-size:22px;font-weight:900;color:#fff;margin-bottom:4px">X-FLY EXECUTIVE</h2>
+        <p style="font-size:13px;color:var(--text-muted);margin:0">เข้าสู่ระบบสำหรับเจ้าของกิจการและผู้บริหารสูงสุด</p>
       </div>
 
       <form id="ownerLoginForm" autocomplete="off">
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group" style="margin-bottom:14px">
           <label for="ownerEmail">👑 บัญชีผู้บริหาร (Owner Email)</label>
           <input type="email" id="ownerEmail" placeholder="owner@xfly.com" required value="owner@xfly.com">
         </div>
@@ -116,22 +135,21 @@
           </div>
         </div>
 
-        <div id="ownerLoginError" class="auth-error hidden" style="margin-bottom:16px"></div>
+        <div id="ownerLoginError" class="auth-error hidden" style="margin-bottom:14px"></div>
 
-        <button type="submit" class="btn btn-primary w-full" id="ownerLoginBtn" style="padding:14px;font-weight:800;font-size:15px">
+        <button type="submit" class="btn btn-primary w-full" id="ownerLoginBtn" style="padding:13px;font-weight:800;font-size:15px">
           👑 เข้าสู่ระบบผู้บริหาร
         </button>
       </form>
 
-      <div style="margin-top:20px;padding:12px 16px;background:rgba(255,215,0,0.06);border:1px dashed var(--border-gold);border-radius:var(--radius-md);font-size:12px;color:var(--text-muted);line-height:1.6">
+      <div style="margin-top:16px;padding:12px 14px;background:rgba(255,215,0,0.06);border:1px dashed var(--border-gold);border-radius:var(--radius-md);font-size:12px;color:var(--text-muted);line-height:1.6">
         <div>👑 <strong>เฉพาะบัญชีผู้บริหารสูงสุด (Owner Only):</strong></div>
         <div>อีเมล: <code style="color:var(--primary)">owner@xfly.com</code> | รหัสผ่าน: <code style="color:var(--primary)">owner1234</code></div>
-        <div style="margin-top:6px;font-size:11px;color:var(--text-muted)">⚠️ <em>สำหรับเจ้าหน้าที่ ให้เข้าสู่ระบบด้วยบัญชี Admin ที่ <a href="admin.html" style="color:var(--primary);text-decoration:underline">Admin Portal</a></em></div>
       </div>
 
-      <div style="text-align:center;margin-top:24px;display:flex;justify-content:center;gap:16px">
+      <div style="text-align:center;margin-top:20px;display:flex;justify-content:center;gap:16px">
         <a href="index.html" class="btn-link" style="font-size:13px">← หน้าหลัก</a>
-        <a href="admin.html" class="btn-link" style="font-size:13px">🛡️ Admin Portal →</a>
+        <a href="staff.html" class="btn-link" style="font-size:13px">🛡️ Staff Portal →</a>
       </div>
     </div>
   </div>
@@ -158,8 +176,8 @@
           <div style="font-weight:800;color:var(--primary)">X-Fly Executive Owner</div>
           <div style="font-size:11px;color:var(--text-muted)">owner@xfly.com</div>
         </div>
-        <a href="admin.html" class="btn btn-outline btn-sm" target="_blank">
-          🛡️ สลับไป Admin Portal
+        <a href="staff.html" class="btn btn-outline btn-sm" target="_blank">
+          🛡️ สลับไป Staff Portal
         </a>
         <button class="btn btn-danger btn-sm" onclick="handleOwnerLogout()" style="padding:6px 14px">
           🚪 ออกจากระบบ
@@ -180,7 +198,7 @@
           📈 ยอดขายและรายได้ (Sales & Revenue)
         </button>
         <button class="owner-tab" id="tabOwnerAdminsBtn" onclick="switchOwnerTab('admins')">
-          👥 จัดการผู้ดูแลระบบ (Manage Admin)
+          👥 จัดการเจ้าหน้าที่ (Manage Staff)
         </button>
       </div>
 
@@ -230,27 +248,27 @@
           </div>
 
           <div class="card" style="padding:24px">
-            <div style="font-weight:800;font-size:16px;margin-bottom:18px">✈️ สัดส่วนยอดขายตามชั้นที่นั่ง</div>
+            <div style="font-weight:800;font-size:16px;margin-bottom:18px">✈️ สัดส่วนยอดขายตามชั้นที่นั่ง (All-Premium)</div>
             <div style="margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
+                <span>👑 First Class (ระดับสูงสุด)</span>
+                <strong id="classPercentFirst">0%</strong>
+              </div>
+              <div class="seat-bar">
+                <div class="seat-bar-fill" id="barFirst" style="width:0%;background:var(--primary)"></div>
+              </div>
+            </div>
+            <div style="margin-bottom:20px">
               <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
                 <span>✨ Business Class (พรีเมียม)</span>
                 <strong id="classPercentBusiness">0%</strong>
               </div>
               <div class="seat-bar">
-                <div class="seat-bar-fill" id="barBusiness" style="width:0%;background:var(--primary)"></div>
-              </div>
-            </div>
-            <div style="margin-bottom:20px">
-              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
-                <span>Economy Class (ชั้นประหยัด)</span>
-                <strong id="classPercentEconomy">0%</strong>
-              </div>
-              <div class="seat-bar">
-                <div class="seat-bar-fill" id="barEconomy" style="width:0%;background:var(--success)"></div>
+                <div class="seat-bar-fill" id="barBusiness" style="width:0%;background:var(--success)"></div>
               </div>
             </div>
             <div style="padding:14px;background:rgba(255,255,255,0.02);border-radius:var(--radius-md);border:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6">
-              💡 <strong>ข้อเสนอแนะทางธุรกิจ:</strong> ที่นั่ง Business Class สร้างอัตรากำไรต่อที่นั่งสูงกว่า 2.5 เท่า แนะนำเพิ่มโปรโมชั่นช่วงเช้าตรู่
+              💡 <strong>ข้อเสนอแนะทางธุรกิจ:</strong> ให้บริการเฉพาะ First Class และ Business Class ระดับพรีเมียม สร้างรายได้ต่อเที่ยวบินสูงกว่ามาตรฐานอุตสาหกรรม
             </div>
           </div>
         </div>
@@ -260,11 +278,11 @@
       <div id="sectionOwnerRevenue" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
           <div>
-            <h2 style="font-size:20px;font-weight:900;margin:0">📈 รายงานยอดขายและรายได้เชิงลึก (Sales & Revenue)</h2>
-            <p style="font-size:13px;color:var(--text-muted);margin:2px 0 0">วิเคราะห์รายได้ตามเที่ยวบิน เส้นทางบิน และอัตราการคืนเงิน</p>
+            <h2 style="font-size:20px;font-weight:900;margin:0">📊 รายงานยอดขายและรายได้เชิงลึก (Revenue Analytics)</h2>
+            <p style="font-size:13px;color:var(--text-muted);margin:2px 0 0">แจกแจงรายได้รายเที่ยวบิน อัตราการบรรทุก และมูลค่าสุทธิ</p>
           </div>
           <button class="btn btn-outline btn-sm" onclick="exportRevenueReport()">
-            📥 สั่งพิมพ์รายงานรายได้
+            🖨️ พิมพ์รายงานรายได้ (Print / PDF)
           </button>
         </div>
 
@@ -326,29 +344,29 @@
   </div>
 
   <!-- ═══════════════════════════════════════════════════ -->
-  <!-- MODAL: ADD / EDIT ADMIN                              -->
+  <!-- MODAL: ADD / EDIT STAFF                              -->
   <!-- ═══════════════════════════════════════════════════ -->
   <div class="modal-overlay" id="adminModal">
     <div class="modal" style="max-width:480px;padding:28px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-        <h3 id="adminModalTitle" style="margin:0;font-size:18px">👥 สร้างบัญชี Admin ใหม่</h3>
+        <h3 id="adminModalTitle" style="margin:0;font-size:18px">👥 สร้างบัญชี Staff ใหม่</h3>
         <button class="btn btn-ghost btn-sm" onclick="closeAdminModal()">✕</button>
       </div>
 
       <form id="adminAccountForm" onsubmit="saveAdminSubmit(event)">
         <input type="hidden" id="adminAccountEditEmail">
         <div class="form-group" style="margin-bottom:14px">
-          <label for="adminNameInput">ชื่อ-นามสกุล ผู้ดูแล</label>
+          <label for="adminNameInput">ชื่อ-นามสกุล เจ้าหน้าที่ (Staff Name)</label>
           <input type="text" id="adminNameInput" placeholder="สมชาย เจ้าหน้าที่ระบบ" required>
         </div>
 
         <div class="form-group" style="margin-bottom:14px">
-          <label for="adminEmailInput">อีเมลเข้าสู่ระบบ (Login Email)</label>
+          <label for="adminEmailInput">อีเมลเข้าสู่ระบบ (Staff Email)</label>
           <input type="email" id="adminEmailInput" placeholder="staff@xfly.com" required>
         </div>
 
         <div class="form-group" style="margin-bottom:14px">
-          <label for="adminPasswordInput">รหัสผ่านเริ่มต้น</label>
+          <label for="adminPasswordInput">รหัสผ่านเริ่มต้น (Password)</label>
           <input type="password" id="adminPasswordInput" placeholder="••••••••" required>
         </div>
 
@@ -356,9 +374,9 @@
           <div class="form-group">
             <label for="adminRoleSelect">ระดับสิทธิ์ (Role)</label>
             <select id="adminRoleSelect">
-              <option value="superadmin">Super Admin (ทุกสิทธิ์)</option>
-              <option value="ops_admin">Flight Operations (เที่ยวบิน)</option>
-              <option value="support_admin">Ticket Support (ตั๋วโดยสาร)</option>
+              <option value="staff_lead">Staff Lead (หัวหน้างาน)</option>
+              <option value="ops_staff">Flight Operations (เที่ยวบิน)</option>
+              <option value="support_staff">Ticket Support (ตั๋วโดยสาร)</option>
             </select>
           </div>
           <div class="form-group">
@@ -369,7 +387,7 @@
 
         <div style="display:flex;justify-content:flex-end;gap:10px">
           <button type="button" class="btn btn-ghost" onclick="closeAdminModal()">ยกเลิก</button>
-          <button type="submit" class="btn btn-primary">💾 บันทึกบัญชี Admin</button>
+          <button type="submit" class="btn btn-primary">💾 บันทึกบัญชี Staff</button>
         </div>
       </form>
     </div>

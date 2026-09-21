@@ -70,8 +70,11 @@ function renderAdminTicketsTable(bookings) {
           <div style="font-size:11px;color:var(--text-muted)">${route}</div>
         </td>
         <td>
-          <strong style="color:var(--primary)">${b.seatId || '-'}</strong>
-          <div style="font-size:11px;color:var(--text-muted)">${b.seatClass === 'business' ? '✨ Business' : 'Economy'}</div>
+          <div style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;background:rgba(212,175,55,0.15);border:1px solid var(--border-gold);border-radius:var(--radius-sm)">
+            <span style="font-size:13px">🪑</span>
+            <strong style="color:var(--primary);font-size:14px">${b.seatId || '-'}</strong>
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${b.seatClass === 'first' ? '👑 First Class' : '✨ Business Class'}</div>
         </td>
         <td style="font-weight:700;color:var(--text-primary)">
           ${formatPrice(b.totalPrice || b.basePrice || 0)}
@@ -86,7 +89,7 @@ function renderAdminTicketsTable(bookings) {
           <button class="btn btn-primary btn-sm" onclick="viewTicketModal('${b.id}')" style="padding:4px 10px;font-size:12px">
             🎫 ดูตั๋ว
           </button>
-          ${isConfirmed ? `
+          ${isConfirmed && typeof currentAdmin !== 'undefined' && currentAdmin?.role !== 'ticket' ? `
             <button class="btn btn-danger btn-sm" onclick="adminCancelTicketAction('${b.id}', '${b.flightId}', '${b.seatId}')" style="padding:4px 8px;font-size:12px;margin-left:4px" title="ยกเลิกการจองและปล่อยที่นั่ง">
               ✕ ยกเลิก
             </button>
@@ -142,7 +145,7 @@ function viewTicketModal(bookingId) {
         <div>
           <div style="font-size:11px;color:var(--text-muted)">ที่นั่ง / SEAT</div>
           <div style="font-size:22px;font-weight:900;color:var(--primary)">${booking.seatId}</div>
-          <div style="font-size:11px;color:var(--text-muted)">${booking.seatClass === 'business' ? 'Business Class' : 'Economy Class'}</div>
+          <div style="font-size:11px;color:var(--text-muted)">${booking.seatClass === 'first' ? '👑 First Class' : '✨ Business Class'}</div>
         </div>
         <div style="text-align:right">
           <div style="font-size:11px;color:var(--text-muted)">ยอดชำระเงิน</div>

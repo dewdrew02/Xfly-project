@@ -17,14 +17,14 @@ function renderOwnerRevenueSection() {
 
   tbody.innerHTML = flights.map(f => {
     const flightBookings = bookings.filter(b => b.flightId === f.id);
-    const economyBookings = flightBookings.filter(b => b.seatClass === 'economy');
-    const businessBookings = flightBookings.filter(b => b.seatClass === 'business');
+    const businessBookings = flightBookings.filter(b => b.seatClass === 'business' || b.seatClass === 'economy');
+    const firstBookings = flightBookings.filter(b => b.seatClass === 'first');
 
-    const economyRevenue = economyBookings.reduce((sum, b) => sum + (b.totalPrice || b.basePrice || 0), 0);
     const businessRevenue = businessBookings.reduce((sum, b) => sum + (b.totalPrice || b.basePrice || 0), 0);
-    const totalFlightRevenue = economyRevenue + businessRevenue;
+    const firstRevenue = firstBookings.reduce((sum, b) => sum + (b.totalPrice || b.basePrice || 0), 0);
+    const totalFlightRevenue = businessRevenue + firstRevenue;
 
-    const totalSeats = (f.seats?.business || 4) + (f.seats?.economy || 30);
+    const totalSeats = (f.seats?.first || 12) + (f.seats?.business || 60);
     const occupancyPercent = Math.round((flightBookings.length / totalSeats) * 100);
 
     return `
@@ -45,8 +45,8 @@ function renderOwnerRevenueSection() {
             ${occupancyPercent}%
           </span>
         </td>
-        <td>${formatPrice(economyRevenue)}</td>
         <td>${formatPrice(businessRevenue)}</td>
+        <td>${formatPrice(firstRevenue)}</td>
         <td style="text-align:right">
           <strong style="color:var(--primary);font-size:15px">${formatPrice(totalFlightRevenue)}</strong>
         </td>

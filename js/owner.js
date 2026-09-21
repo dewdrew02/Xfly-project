@@ -60,7 +60,7 @@ function setupOwnerLoginForm() {
       const admins = Storage.getAdmins();
       const isAdminEmail = admins.some(a => a.email.toLowerCase() === email.toLowerCase()) || email.toLowerCase() === 'admin';
       if (isAdminEmail) {
-        err.innerHTML = '⚠️ บัญชีนี้เป็นของผู้ดูแลระบบ (Admin) ไม่มีสิทธิ์เข้า Executive Portal กรุณาเข้าสู่ระบบที่ <a href="admin.html" style="color:var(--primary);text-decoration:underline;font-weight:bold">Admin Portal</a>';
+        err.innerHTML = '⚠️ บัญชีนี้เป็นของเจ้าหน้าที่ (Staff) ไม่มีสิทธิ์เข้า Executive Portal กรุณาเข้าสู่ระบบที่ <a href="staff.html" style="color:var(--primary);text-decoration:underline;font-weight:bold">Staff Portal</a>';
         err.classList.remove('hidden');
         btn.disabled = false;
         btn.innerHTML = '👑 เข้าสู่ระบบผู้บริหาร';
@@ -94,13 +94,11 @@ function setupOwnerLoginForm() {
 }
 
 function handleOwnerLogout() {
-  if (confirm('ยืนยันการออกจากระบบผู้บริหาร?')) {
-    sessionStorage.removeItem(OWNER_SESSION_KEY);
-    localStorage.removeItem(OWNER_SESSION_KEY);
-    currentOwner = null;
-    showToast('ออกจากระบบผู้บริหารเรียบร้อยแล้ว', 'info');
-    showOwnerLogin();
-  }
+  sessionStorage.removeItem(OWNER_SESSION_KEY);
+  localStorage.removeItem(OWNER_SESSION_KEY);
+  currentOwner = null;
+  showToast('ออกจากระบบผู้บริหารเรียบร้อยแล้ว', 'info');
+  showOwnerLogin();
 }
 
 function toggleOwnerPassword() {
@@ -198,20 +196,20 @@ function renderTopRoutes(confirmedBookings) {
 }
 
 function renderSeatClassShare(confirmedBookings) {
-  const businessCount = confirmedBookings.filter(b => b.seatClass === 'business').length;
-  const economyCount = confirmedBookings.filter(b => b.seatClass === 'economy').length;
-  const total = businessCount + economyCount;
+  const firstCount = confirmedBookings.filter(b => b.seatClass === 'first').length;
+  const businessCount = confirmedBookings.filter(b => b.seatClass === 'business' || b.seatClass === 'economy').length;
+  const total = firstCount + businessCount;
 
-  const bizPercent = total > 0 ? Math.round((businessCount / total) * 100) : 20;
-  const ecoPercent = total > 0 ? Math.round((economyCount / total) * 100) : 80;
+  const firstPercent = total > 0 ? Math.round((firstCount / total) * 100) : 25;
+  const bizPercent = total > 0 ? Math.round((businessCount / total) * 100) : 75;
 
+  const elFirst = document.getElementById('classPercentFirst');
   const elBiz = document.getElementById('classPercentBusiness');
-  const elEco = document.getElementById('classPercentEconomy');
+  const barFirst = document.getElementById('barFirst');
   const barBiz = document.getElementById('barBusiness');
-  const barEco = document.getElementById('barEconomy');
 
+  if (elFirst) elFirst.textContent = `${firstPercent}% (${firstCount} ที่นั่ง)`;
   if (elBiz) elBiz.textContent = `${bizPercent}% (${businessCount} ที่นั่ง)`;
-  if (elEco) elEco.textContent = `${ecoPercent}% (${economyCount} ที่นั่ง)`;
+  if (barFirst) barFirst.style.width = `${firstPercent}%`;
   if (barBiz) barBiz.style.width = `${bizPercent}%`;
-  if (barEco) barEco.style.width = `${ecoPercent}%`;
 }

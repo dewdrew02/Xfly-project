@@ -1047,3 +1047,62 @@ footer {
   .ticket-main * { color: #000 !important; }
 }
 
+/* ─── All-Premium First Class & Business Class Badges ─── */
+.tag-first {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.22), rgba(255, 165, 0, 0.32));
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+.tag-business {
+  background: rgba(0, 200, 150, 0.15);
+  border: 1px solid rgba(0, 200, 150, 0.4);
+  color: var(--success);
+  font-weight: 700;
+}
+
+/* ─── Crypto Payment Styles ─── */
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.crypto-btc {
+  background: rgba(247, 147, 26, 0.15);
+  border: 1px solid rgba(247, 147, 26, 0.4);
+  color: #F7931A;
+}
+.crypto-eth {
+  background: rgba(98, 126, 234, 0.15);
+  border: 1px solid rgba(98, 126, 234, 0.4);
+  color: #627EEA;
+}
+.crypto-address-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-family: monospace;
+  font-size: 12px;
+  word-break: break-all;
+  gap: 10px;
+}
+.crypto-amount-badge {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

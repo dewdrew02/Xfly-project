@@ -154,6 +154,23 @@
         </div>
       </div>
 
+      <!-- International Deal -->
+      <div class="promo-card hot" onclick="selectPromo('XF701')">
+        <div class="promo-icon">🗼</div>
+        <div class="promo-timer">⏰ ดีลพรีเมียมต่างประเทศ</div>
+        <div class="promo-badge hot">🇯🇵 บินตรงโตเกียว</div>
+        <div class="promo-route">BKK <span>→</span> NRT</div>
+        <div class="promo-desc">กรุงเทพ → โตเกียว (นาริตะ)<br>บินตรงสุดหรู First & Business Class</div>
+        <div class="promo-footer">
+          <div class="promo-price">
+            <span class="promo-price-label">เริ่มต้น</span>
+            <span class="promo-price-value">฿8,900</span>
+            <span class="promo-price-original">฿12,500</span>
+          </div>
+          <div class="promo-save-badge" style="background:linear-gradient(135deg,#ff3366,#ff0033);color:#fff">ลด 28%</div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Best Time to Fly Tips -->
@@ -213,13 +230,27 @@
     <div class="section-header">
       <div>
         <div class="section-title">🛩 เที่ยวบินทั้งหมด</div>
-        <div class="section-subtitle" id="flightCount">6 เที่ยวบิน</div>
+        <div class="section-subtitle" id="flightCount">กำลังโหลด...</div>
       </div>
       <div style="display:flex;gap:10px;align-items:center">
         <span style="font-size:13px;color:var(--text-muted)">อัปเดตแบบ real-time</span>
         <div class="spinner" style="width:16px;height:16px;"></div>
       </div>
     </div>
+
+    <!-- Category Filter Tabs: All, Domestic, International -->
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+      <button type="button" class="btn btn-sm btn-primary" id="catBtnAll" onclick="filterFlightsByCategory('all')">
+        ✈️ ทุกเส้นทาง (All Flights)
+      </button>
+      <button type="button" class="btn btn-sm btn-outline" id="catBtnDomestic" onclick="filterFlightsByCategory('domestic')">
+        🇹🇭 เส้นทางในประเทศ (Domestic)
+      </button>
+      <button type="button" class="btn btn-sm btn-outline" id="catBtnInternational" onclick="filterFlightsByCategory('international')">
+        🌐 เส้นทางต่างประเทศ (International)
+      </button>
+    </div>
+
     <div id="flightsList"></div>
   </section>
 
@@ -254,7 +285,7 @@
     <div><span style="color:var(--primary);font-weight:700">Xfly-Anyway Airlines</span> © 2026 — Premium Aviation Experience</div>
     <div style="display:flex;gap:18px;align-items:center">
       <a href="admin.html" style="color:var(--text-muted);text-decoration:none;font-size:12px;opacity:0.7;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
-        🛡️ สำหรับเจ้าหน้าที่ (Admin Portal)
+        🛡️ สำหรับเจ้าหน้าที่ (Staff Portal)
       </a>
       <a href="owner.html" style="color:var(--primary);text-decoration:none;font-size:12px;opacity:0.85;font-weight:600;transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85">
         👑 ระบบผู้บริหาร (Owner Portal)

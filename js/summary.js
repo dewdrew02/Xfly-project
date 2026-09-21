@@ -63,11 +63,11 @@ function renderDetails() {
 
   // 3. Seat Details
   document.getElementById('sumSeatNumber').textContent = pending.seatId;
-  const isBusiness = pending.seatClass === 'business';
-  document.getElementById('sumSeatClass').textContent = isBusiness ? '✨ Business Class' : 'Economy Class';
-  document.getElementById('sumSeatDesc').textContent = isBusiness
-    ? 'แถวหน้าสุด กว้างขวาง พร้อมบริการเครื่องดื่มพรีเมียมและอาหารพิเศษ'
-    : 'ที่นั่งมาตรฐาน พร้อมพื้นที่วางขาที่สะดวกสบายและการบริการมาตรฐาน X-Fly';
+  const isFirst = pending.seatClass === 'first';
+  document.getElementById('sumSeatClass').textContent = isFirst ? '👑 First Class' : '✨ Business Class';
+  document.getElementById('sumSeatDesc').textContent = isFirst
+    ? 'แถวหน้าสุด ห้องโดยสารระดับพรีเมียมสูงสุด พร้อมบริการอาหารชั้นเลิศและเลานจ์ส่วนตัว'
+    : 'ที่นั่งชั้นธุรกิจ กว้างขวาง สะดวกสบาย พร้อมบริการอาหารและเครื่องดื่มระดับพรีเมียม';
 
   // 4. Pricing Breakdown
   const baseFare = pending.price;

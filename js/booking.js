@@ -9,8 +9,8 @@ let mySessionId = null;
 let refreshInterval = null;
 
 const SEAT_COLS = ['A', 'B', 'C', 'D', 'E', 'F'];
-const BUSINESS_ROWS = [1, 2];
-const ECONOMY_ROWS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const FIRST_ROWS = [1, 2];
+const BUSINESS_ROWS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 document.addEventListener('DOMContentLoaded', () => {
   Storage.init();
@@ -57,6 +57,14 @@ function renderFlightInfo() {
   document.getElementById('pageFlightId').textContent = f.id;
   document.getElementById('pageRoute').textContent = `${f.from.code} → ${f.to.code}`;
 
+  const firstPrice = Math.round(f.price * 2.5);
+  const busPrice = f.price;
+
+  const firstLabel = document.getElementById('firstPriceLabel');
+  const busLabel = document.getElementById('businessPriceLabel');
+  if (firstLabel) firstLabel.textContent = formatPrice(firstPrice);
+  if (busLabel) busLabel.textContent = formatPrice(busPrice);
+
   const info = document.getElementById('flightInfoBar');
   if (info) {
     info.innerHTML = `
@@ -78,7 +86,7 @@ function renderFlightInfo() {
       </div>
       <div class="flight-summary-row">
         <span class="label">💵 ช่วงราคา</span>
-        <span class="value gold">${formatPrice(f.price)} – ${formatPrice(Math.round(f.price * 2.5))}</span>
+        <span class="value gold">${formatPrice(busPrice)} – ${formatPrice(firstPrice)}</span>
       </div>
     `;
   }
@@ -104,26 +112,26 @@ function renderSeatMap() {
     <div class="col-label">F</div>
   </div>`;
 
+  // First class
+  html += `<div class="class-divider">
+    <div class="class-divider-line"></div>
+    <div class="class-divider-label">👑 First Class</div>
+    <div class="class-divider-line"></div>
+  </div>`;
+
+  FIRST_ROWS.forEach(row => {
+    html += renderRow(row, 'first');
+  });
+
   // Business class
   html += `<div class="class-divider">
     <div class="class-divider-line"></div>
-    <div class="class-divider-label">✨ Business</div>
+    <div class="class-divider-label">✨ Business Class</div>
     <div class="class-divider-line"></div>
   </div>`;
 
   BUSINESS_ROWS.forEach(row => {
     html += renderRow(row, 'business');
-  });
-
-  // Economy class
-  html += `<div class="class-divider">
-    <div class="class-divider-line"></div>
-    <div class="class-divider-label">Economy</div>
-    <div class="class-divider-line"></div>
-  </div>`;
-
-  ECONOMY_ROWS.forEach(row => {
-    html += renderRow(row, 'economy');
   });
 
   container.innerHTML = html;
@@ -169,14 +177,12 @@ function renderSeat(row, col, seatClass) {
     ? `onclick="handleSeatClick('${seatId}', '${seatClass}')"`
     : '';
 
-  const priceClass = seatClass === 'business' ? 'B' : 'E';
-
   return `<div class="seat ${cssClass}" 
     id="seat-${seatId}"
     data-seat="${seatId}"
     data-class="${seatClass}"
     ${clickHandler}
-    title="ที่นั่ง ${seatId} (${seatClass === 'business' ? 'Business' : 'Economy'})">
+    title="ที่นั่ง ${seatId} (${seatClass === 'first' ? '👑 First Class' : '✨ Business Class'})">
     ${cssClass !== 'booked' && cssClass !== 'locked' ? seatId : ''}
   </div>`;
 }
@@ -184,7 +190,7 @@ function renderSeat(row, col, seatClass) {
 function updateSeatCounts() {
   Storage.cleanExpiredLocks();
   const allSeats = Storage.getAllSeats();
-  const totalSeats = currentFlight.seats.business + currentFlight.seats.economy;
+  const totalSeats = (currentFlight.seats?.first || 12) + (currentFlight.seats?.business || 60);
   let booked = 0, locked = 0;
 
   Object.keys(allSeats).forEach(key => {
@@ -232,8 +238,8 @@ function handleSeatClick(seatId, seatClass) {
   selectedSeat = seatId;
 
   // Show booking modal
-  const price = seatClass === 'business'
-    ? currentFlight.price * 2.5
+  const price = seatClass === 'first'
+    ? Math.round(currentFlight.price * 2.5)
     : currentFlight.price;
   showBookingModal(seatId, seatClass, price);
 }
@@ -254,7 +260,7 @@ function showBookingModal(seatId, seatClass, price) {
   const priceEl = document.getElementById('modalPrice');
 
   if (seatNum) seatNum.textContent = seatId;
-  if (seatClassEl) seatClassEl.textContent = seatClass === 'business' ? '✨ Business Class' : 'Economy Class';
+  if (seatClassEl) seatClassEl.textContent = seatClass === 'first' ? '👑 First Class' : '✨ Business Class';
   if (priceEl) priceEl.textContent = formatPrice(price);
 
   document.getElementById('confirmBookingBtn').onclick = () => proceedToPayment(seatId, seatClass, price);

@@ -47,7 +47,7 @@ function renderFlightBanner() {
       const pb = JSON.parse(pendingBookingStr);
       const seatEl = document.getElementById('bannerSeat');
       if (seatEl) {
-        seatEl.textContent = `${pb.seatId} (${pb.seatClass === 'business' ? 'Business' : 'Economy'})`;
+        seatEl.textContent = `${pb.seatId} (${pb.seatClass === 'first' ? '👑 First Class' : '✨ Business Class'})`;
       }
       document.getElementById('bannerPrice').textContent = formatPrice(pb.price);
       return;

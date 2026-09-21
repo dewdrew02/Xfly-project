@@ -10,7 +10,7 @@ function renderOwnerAdminsSection() {
   const admins = Storage.getAdmins();
 
   if (admins.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted)">ยังไม่มีบัญชีแอดมินในระบบ</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted)">ยังไม่มีบัญชีเจ้าหน้าที่ในระบบ</td></tr>`;
     return;
   }
 
@@ -92,7 +92,7 @@ function saveAdminSubmit(e) {
     status: 'active'
   });
 
-  showToast(`สร้างบัญชี Admin สำหรับ ${email} เรียบร้อย! 👥`, 'success');
+  showToast(`สร้างบัญชี Staff สำหรับ ${email} เรียบร้อย! 👥`, 'success');
   closeAdminModal();
   renderOwnerAdminsSection();
   if (typeof updateOwnerKpis === 'function') updateOwnerKpis();
@@ -110,14 +110,14 @@ function toggleAdminStatus(email) {
 }
 
 function deleteAdminAction(email) {
-  if (email === 'admin@xfly.com') {
-    showToast('ไม่สามารถลบบัญชี Superadmin เริ่มต้นได้', 'warning');
+  if (email === 'admin@xfly.com' || email === 'staff@xfly.com') {
+    showToast('ไม่สามารถลบบัญชีเจ้าหน้าที่หลักของระบบได้', 'warning');
     return;
   }
-  if (!confirm(`ยืนยันการลบบัญชีแอดมิน ${email} ออกจากระบบ?`)) return;
+  if (!confirm(`ยืนยันการลบบัญชีเจ้าหน้าที่ ${email} ออกจากระบบ?`)) return;
 
   Storage.deleteAdmin(email);
-  showToast(`ลบบัญชีแอดมิน ${email} เรียบร้อยแล้ว`, 'info');
+  showToast(`ลบบัญชีเจ้าหน้าที่ ${email} เรียบร้อยแล้ว`, 'info');
   renderOwnerAdminsSection();
   if (typeof updateOwnerKpis === 'function') updateOwnerKpis();
 }

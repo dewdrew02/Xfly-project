@@ -69,13 +69,21 @@ function renderBoardingPass(b) {
   }
 
   document.getElementById('ticketSeat').textContent = b.seatId || '-';
-  const isBusiness = b.seatClass === 'business';
+  const isFirst = b.seatClass === 'first';
   const classTag = document.getElementById('ticketClassTag');
   if (classTag) {
-    classTag.textContent = isBusiness ? '✨ Business' : 'Economy';
-    classTag.className = isBusiness ? 'tag tag-business' : 'tag tag-economy';
+    classTag.textContent = isFirst ? '👑 First Class' : '✨ Business Class';
+    classTag.className = isFirst ? 'tag tag-first' : 'tag tag-business';
   }
 
   document.getElementById('ticketBarcodeText').textContent = `${b.id}-${b.seatId}`;
   document.getElementById('ticketPrice').textContent = formatPrice(b.totalPrice || b.basePrice || 0);
+
+  const payMethodEl = document.getElementById('ticketPaymentMethod');
+  if (payMethodEl) {
+    let methodDisplay = b.paymentMethod || 'Credit Card';
+    if (methodDisplay.includes('Bitcoin')) methodDisplay = '₿ Bitcoin (BTC)';
+    else if (methodDisplay.includes('Ethereum')) methodDisplay = 'Ξ Ethereum (ETH)';
+    payMethodEl.textContent = methodDisplay;
+  }
 }

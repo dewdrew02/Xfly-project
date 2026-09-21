@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS public.airports (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Seed Default Airports (สนามบินมาตรฐานในไทย)
+-- Seed Default Airports (สนามบินมาตรฐานในไทยและต่างประเทศ)
 INSERT INTO public.airports (code, name, city, country, active) VALUES
 ('BKK', 'Suvarnabhumi International Airport', 'Bangkok', 'Thailand', true),
 ('DMK', 'Don Mueang International Airport', 'Bangkok', 'Thailand', true),
@@ -32,7 +32,15 @@ INSERT INTO public.airports (code, name, city, country, active) VALUES
 ('USM', 'Samui International Airport', 'Koh Samui', 'Thailand', true),
 ('KBV', 'Krabi International Airport', 'Krabi', 'Thailand', true),
 ('UTH', 'Udon Thani International Airport', 'Udon Thani', 'Thailand', true),
-('CEI', 'Mae Fah Luang - Chiang Rai Airport', 'Chiang Rai', 'Thailand', true)
+('CEI', 'Mae Fah Luang - Chiang Rai Airport', 'Chiang Rai', 'Thailand', true),
+('NRT', 'Narita International Airport', 'Tokyo', 'Japan', true),
+('HND', 'Haneda International Airport', 'Tokyo', 'Japan', true),
+('SIN', 'Singapore Changi Airport', 'Singapore', 'Singapore', true),
+('ICN', 'Incheon International Airport', 'Seoul', 'South Korea', true),
+('LHR', 'Heathrow Airport', 'London', 'United Kingdom', true),
+('CDG', 'Charles de Gaulle Airport', 'Paris', 'France', true),
+('HKG', 'Hong Kong International Airport', 'Hong Kong', 'Hong Kong', true),
+('TPE', 'Taiwan Taoyuan Airport', 'Taipei', 'Taiwan', true)
 ON CONFLICT (code) DO UPDATE SET
     name = EXCLUDED.name,
     city = EXCLUDED.city,
@@ -82,19 +90,29 @@ CREATE TABLE IF NOT EXISTS public.flights (
     arrival VARCHAR(10) NOT NULL,
     duration VARCHAR(50) NOT NULL,
     price INT NOT NULL DEFAULT 1290,
-    seats_business INT DEFAULT 4,
-    seats_economy INT DEFAULT 30,
+    seats_first INT DEFAULT 12,
+    seats_business INT DEFAULT 60,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Seed Default Flights (ตารางเที่ยวบินหลักของ Xfly-Anyway Airlines)
-INSERT INTO public.flights (id, airline_code, airline_name, from_code, from_city, from_name, to_code, to_city, to_name, departure, arrival, duration, price, seats_business, seats_economy) VALUES
-('XF101', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'CNX', 'Chiang Mai', 'Chiang Mai Intl', '06:00', '07:15', '1h 15m', 1290, 4, 30),
-('XF202', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'HKT', 'Phuket', 'Phuket Intl', '08:30', '09:45', '1h 15m', 1590, 4, 30),
-('XF303', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'USM', 'Koh Samui', 'Samui Intl', '10:00', '11:20', '1h 20m', 1890, 4, 30),
-('XF404', 'XF', 'Xfly-Anyway Airlines', 'CNX', 'Chiang Mai', 'Chiang Mai Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '13:00', '14:15', '1h 15m', 1350, 4, 30),
-('XF505', 'XF', 'Xfly-Anyway Airlines', 'HKT', 'Phuket', 'Phuket Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '15:30', '16:45', '1h 15m', 1650, 4, 30),
-('XF606', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'KBV', 'Krabi', 'Krabi Intl', '17:00', '18:20', '1h 20m', 1490, 4, 30)
+-- ปรับปรุงคอลัมน์ให้อัตโนมัติ (Safely migrate flight seat columns)
+ALTER TABLE public.flights ADD COLUMN IF NOT EXISTS seats_first INT DEFAULT 12;
+ALTER TABLE public.flights ADD COLUMN IF NOT EXISTS seats_business INT DEFAULT 60;
+
+-- Seed Default Flights (ตารางเที่ยวบินหลักของ Xfly-Anyway Airlines ทั้งในและต่างประเทศ)
+INSERT INTO public.flights (id, airline_code, airline_name, from_code, from_city, from_name, to_code, to_city, to_name, departure, arrival, duration, price, seats_first, seats_business) VALUES
+('XF101', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'CNX', 'Chiang Mai', 'Chiang Mai Intl', '06:00', '07:15', '1h 15m', 1290, 12, 60),
+('XF202', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'HKT', 'Phuket', 'Phuket Intl', '08:30', '09:45', '1h 15m', 1590, 12, 60),
+('XF303', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'USM', 'Koh Samui', 'Samui Intl', '10:00', '11:20', '1h 20m', 1890, 12, 60),
+('XF404', 'XF', 'Xfly-Anyway Airlines', 'CNX', 'Chiang Mai', 'Chiang Mai Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '13:00', '14:15', '1h 15m', 1350, 12, 60),
+('XF505', 'XF', 'Xfly-Anyway Airlines', 'HKT', 'Phuket', 'Phuket Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '15:30', '16:45', '1h 15m', 1650, 12, 60),
+('XF606', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'KBV', 'Krabi', 'Krabi Intl', '17:00', '18:20', '1h 20m', 1490, 12, 60),
+('XF701', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'NRT', 'Tokyo', 'Narita Intl', '08:00', '16:30', '6h 30m', 8900, 12, 60),
+('XF702', 'XF', 'Xfly-Anyway Airlines', 'NRT', 'Tokyo', 'Narita Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '18:00', '23:00', '7h 00m', 9200, 12, 60),
+('XF801', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'SIN', 'Singapore', 'Changi Intl', '09:30', '13:00', '2h 30m', 3450, 12, 60),
+('XF802', 'XF', 'Xfly-Anyway Airlines', 'SIN', 'Singapore', 'Changi Intl', 'BKK', 'Bangkok', 'Suvarnabhumi', '14:30', '16:00', '2h 30m', 3450, 12, 60),
+('XF901', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'ICN', 'Seoul', 'Incheon Intl', '23:30', '07:00', '5h 30m', 7800, 12, 60),
+('XF951', 'XF', 'Xfly-Anyway Airlines', 'BKK', 'Bangkok', 'Suvarnabhumi', 'LHR', 'London', 'Heathrow', '01:15', '07:45', '12h 30m', 18900, 12, 60)
 ON CONFLICT (id) DO UPDATE SET
     airline_name = EXCLUDED.airline_name,
     from_code = EXCLUDED.from_code,
@@ -107,8 +125,8 @@ ON CONFLICT (id) DO UPDATE SET
     arrival = EXCLUDED.arrival,
     duration = EXCLUDED.duration,
     price = EXCLUDED.price,
-    seats_business = EXCLUDED.seats_business,
-    seats_economy = EXCLUDED.seats_economy;
+    seats_first = EXCLUDED.seats_first,
+    seats_business = EXCLUDED.seats_business;
 
 -- ═══════════════════════════════════════════════════════════════
 -- 5. BOOKINGS TABLE (การจองและตั๋วโดยสาร E-Boarding Pass)
@@ -119,10 +137,10 @@ CREATE TABLE IF NOT EXISTS public.bookings (
     flight_id VARCHAR(20),
     airline_name VARCHAR(255) DEFAULT 'Xfly-Anyway Airlines',
     seat_id VARCHAR(10) NOT NULL,
-    seat_class VARCHAR(50) DEFAULT 'economy',
+    seat_class VARCHAR(50) DEFAULT 'business', -- 'first' (First Class 👑), 'business' (Business Class ✨)
     base_price INT DEFAULT 0,
     total_price INT DEFAULT 0,
-    payment_method VARCHAR(100) DEFAULT 'PromptPay',
+    payment_method VARCHAR(100) DEFAULT 'PromptPay', -- 'PromptPay', 'CreditCard', 'TrueMoney', 'Bitcoin (BTC)', 'Ethereum (ETH)'
     passenger_title VARCHAR(20),
     passenger_name VARCHAR(255) NOT NULL,
     passenger_email VARCHAR(255) NOT NULL,
@@ -176,27 +194,30 @@ CREATE TABLE IF NOT EXISTS public.seat_locks (
 );
 
 -- ═══════════════════════════════════════════════════════════════
--- 7. ADMINS TABLE (เจ้าหน้าที่ผู้ดูแลระบบ / Flight Operations)
--- แยกเฉพาะบัญชีเจ้าหน้าที่ Admin (ห้ามปนกับบัญชี Owner)
+-- 7. ADMINS / STAFF TABLE (เจ้าหน้าที่ผู้ดูแลระบบและปฏิบัติการการบิน / Staff)
+-- แยกเฉพาะบัญชีเจ้าหน้าที่ Staff/Admin (ห้ามปนกับบัญชี Owner)
 -- ═══════════════════════════════════════════════════════════════
 CREATE TABLE IF NOT EXISTS public.admins (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) DEFAULT 'admin',
+    role VARCHAR(50) DEFAULT 'staff',
     department VARCHAR(100) DEFAULT 'Flight Operations',
     status VARCHAR(50) DEFAULT 'active',
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Seed Default Admins (เฉพาะเจ้าหน้าที่ผู้ดูแลระบบ)
+-- Seed Default Staff / Admins (เฉพาะเจ้าหน้าที่ผู้ดูแลระบบและตรวจสอบตั๋ว)
 INSERT INTO public.admins (id, name, email, password, role, department, status) VALUES
-('ADM-001', 'System Administrator', 'admin@xfly.com', 'admin1234', 'superadmin', 'Central IT & Operations', 'active'),
-('ADM-002', 'Flight Operations Lead', 'ops@xfly.com', 'admin1234', 'ops_admin', 'Flight Control', 'active')
+('STF-001', 'Xfly Operations Staff', 'staff@xfly.com', 'staff1234', 'staff_lead', 'Flight Operations', 'active'),
+('STF-T01', 'Ticket Officer', 'ticket@xfly.com', 'ticket1234', 'ticket', 'Passenger & Ticket Services', 'active'),
+('ADM-001', 'System Administrator', 'admin@xfly.com', 'admin1234', 'staff_lead', 'Central IT & Operations', 'active'),
+('ADM-002', 'Flight Operations Support', 'ops@xfly.com', 'admin1234', 'ops_staff', 'Flight Control', 'active')
 ON CONFLICT (email) DO UPDATE SET
     name = EXCLUDED.name,
     password = EXCLUDED.password,
+    role = EXCLUDED.role,
     department = EXCLUDED.department,
     status = EXCLUDED.status;
 

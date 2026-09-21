@@ -111,28 +111,44 @@
             เลือกช่องทางชำระเงิน
           </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;margin-bottom:24px">
             <div class="payment-method-card active" id="methodCardBtn" onclick="switchPaymentMethod('card')">
-              <span style="font-size:24px">💳</span>
+              <span style="font-size:22px">💳</span>
               <div>
-                <div style="font-weight:700;font-size:14px">บัตรเครดิต/เดบิต</div>
-                <div style="font-size:11px;color:var(--text-muted)">Visa, Mastercard</div>
+                <div style="font-weight:700;font-size:13px">บัตรเครดิต</div>
+                <div style="font-size:11px;color:var(--text-muted)">Visa / MC</div>
               </div>
             </div>
 
             <div class="payment-method-card" id="methodQrBtn" onclick="switchPaymentMethod('qr')">
-              <span style="font-size:24px">📱</span>
+              <span style="font-size:22px">📱</span>
               <div>
-                <div style="font-weight:700;font-size:14px">PromptPay QR</div>
-                <div style="font-size:11px;color:var(--text-muted)">สแกนจ่ายได้ทุกธนาคาร</div>
+                <div style="font-weight:700;font-size:13px">PromptPay</div>
+                <div style="font-size:11px;color:var(--text-muted)">QR ทุกธนาคาร</div>
               </div>
             </div>
 
             <div class="payment-method-card" id="methodBankBtn" onclick="switchPaymentMethod('bank')">
-              <span style="font-size:24px">🏦</span>
+              <span style="font-size:22px">🏦</span>
               <div>
-                <div style="font-weight:700;font-size:14px">Mobile Banking</div>
-                <div style="font-size:11px;color:var(--text-muted)">โอนผ่านแอปธนาคาร</div>
+                <div style="font-weight:700;font-size:13px">Banking</div>
+                <div style="font-size:11px;color:var(--text-muted)">โอนผ่านแอป</div>
+              </div>
+            </div>
+
+            <div class="payment-method-card" id="methodBtcBtn" onclick="switchPaymentMethod('btc')">
+              <span style="font-size:22px;color:#F7931A">₿</span>
+              <div>
+                <div style="font-weight:700;font-size:13px">Bitcoin</div>
+                <div style="font-size:11px;color:#F7931A">BTC Lightning/OnChain</div>
+              </div>
+            </div>
+
+            <div class="payment-method-card" id="methodEthBtn" onclick="switchPaymentMethod('eth')">
+              <span style="font-size:22px;color:#627EEA">Ξ</span>
+              <div>
+                <div style="font-weight:700;font-size:13px">Ethereum</div>
+                <div style="font-size:11px;color:#627EEA">ETH Web3/ERC20</div>
               </div>
             </div>
           </div>
@@ -233,6 +249,116 @@
             <button class="btn btn-primary btn-lg w-full" onclick="simulateSuccessfulPayment('Mobile Banking')" id="bankConfirmBtn" style="padding:16px">
               ✅ ยืนยันการโอนเงินและออกบัตรโดยสาร
             </button>
+          </div>
+
+          <!-- Method 4: Bitcoin (BTC) View -->
+          <div id="btcPayView" style="display:none;text-align:center;padding:16px 0">
+            <div style="font-size:14px;color:var(--text-secondary);margin-bottom:12px">
+              โอน Bitcoin (BTC) ไปยังที่อยู่กระเป๋าเงิน (Wallet Address) ด้านล่าง
+            </div>
+
+            <div class="crypto-badge crypto-btc" style="margin-bottom:12px">
+              <span>₿</span> Bitcoin Network (Native SegWit / Taproot)
+            </div>
+
+            <div class="crypto-amount-badge">
+              <span style="color:#F7931A;font-size:24px">₿</span>
+              <span id="btcAmountLabel">0.00000000 BTC</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px">
+              อัตราแลกเปลี่ยนโดยประมาณ: 1 BTC ≈ ฿2,450,000 THB
+            </div>
+
+            <div class="qr-box">
+              <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-bottom:6px">
+                <span style="font-size:20px;color:#F7931A">₿</span>
+                <span style="font-weight:900;color:#000;font-size:15px">BITCOIN PAYMENT</span>
+              </div>
+              <svg width="170" height="170" viewBox="0 0 100 100" style="margin:6px auto;display:block">
+                <rect width="100" height="100" fill="#ffffff"/>
+                <path d="M10,10 h28 v28 h-28 z M14,14 v20 h20 v-20 z" fill="#F7931A"/>
+                <rect x="18" y="18" width="12" height="12" fill="#000"/>
+                <path d="M62,10 h28 v28 h-28 z M66,14 v20 h20 v-20 z" fill="#F7931A"/>
+                <rect x="70" y="18" width="12" height="12" fill="#000"/>
+                <path d="M10,62 h28 v28 h-28 z M14,66 v20 h20 v-20 z" fill="#F7931A"/>
+                <rect x="18" y="70" width="12" height="12" fill="#000"/>
+                <rect x="45" y="15" width="8" height="15" fill="#000"/>
+                <rect x="42" y="38" width="16" height="24" fill="#000"/>
+                <rect x="65" y="55" width="22" height="10" fill="#000"/>
+                <rect x="68" y="72" width="18" height="15" fill="#000"/>
+                <rect x="45" y="72" width="12" height="15" fill="#F7931A"/>
+              </svg>
+              <div style="font-size:11px;color:#555">Scan to pay with any Bitcoin Wallet</div>
+            </div>
+
+            <div style="max-width:440px;margin:18px auto 0">
+              <div style="font-size:12px;color:var(--text-muted);text-align:left;margin-bottom:4px">Bitcoin Wallet Address:</div>
+              <div class="crypto-address-box">
+                <span id="btcAddressText">bc1qxfly9anyway7corp88btcflightbooking2026</span>
+                <button class="btn btn-outline btn-sm" onclick="copyCryptoAddress('btcAddressText', 'คัดลอก Bitcoin Address แล้ว')">📋 คัดลอก</button>
+              </div>
+            </div>
+
+            <div style="margin-top:24px">
+              <button class="btn btn-primary btn-lg w-full" onclick="simulateSuccessfulPayment('Bitcoin (BTC)')" id="btcConfirmBtn" style="padding:16px;background:linear-gradient(135deg,#F7931A,#D47806);border-color:#F7931A;color:#fff">
+                ⚡ ยืนยันการโอน Bitcoin แล้ว (จำลองสำเร็จ)
+              </button>
+            </div>
+          </div>
+
+          <!-- Method 5: Ethereum (ETH) View -->
+          <div id="ethPayView" style="display:none;text-align:center;padding:16px 0">
+            <div style="font-size:14px;color:var(--text-secondary);margin-bottom:12px">
+              โอน Ethereum (ETH) ไปยังที่อยู่กระเป๋าเงิน (Web3 / ERC-20) ด้านล่าง
+            </div>
+
+            <div class="crypto-badge crypto-eth" style="margin-bottom:12px">
+              <span>Ξ</span> Ethereum Mainnet & L2 Compatible
+            </div>
+
+            <div class="crypto-amount-badge">
+              <span style="color:#627EEA;font-size:24px">Ξ</span>
+              <span id="ethAmountLabel">0.0000 ETH</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:16px">
+              อัตราแลกเปลี่ยนโดยประมาณ: 1 ETH ≈ ฿115,000 THB
+            </div>
+
+            <div class="qr-box">
+              <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-bottom:6px">
+                <span style="font-size:20px;color:#627EEA">Ξ</span>
+                <span style="font-weight:900;color:#000;font-size:15px">ETHEREUM PAYMENT</span>
+              </div>
+              <svg width="170" height="170" viewBox="0 0 100 100" style="margin:6px auto;display:block">
+                <rect width="100" height="100" fill="#ffffff"/>
+                <path d="M10,10 h28 v28 h-28 z M14,14 v20 h20 v-20 z" fill="#627EEA"/>
+                <rect x="18" y="18" width="12" height="12" fill="#000"/>
+                <path d="M62,10 h28 v28 h-28 z M66,14 v20 h20 v-20 z" fill="#627EEA"/>
+                <rect x="70" y="18" width="12" height="12" fill="#000"/>
+                <path d="M10,62 h28 v28 h-28 z M14,66 v20 h20 v-20 z" fill="#627EEA"/>
+                <rect x="18" y="70" width="12" height="12" fill="#000"/>
+                <rect x="46" y="20" width="8" height="20" fill="#627EEA"/>
+                <rect x="42" y="45" width="16" height="15" fill="#000"/>
+                <rect x="65" y="55" width="22" height="10" fill="#000"/>
+                <rect x="68" y="70" width="18" height="18" fill="#627EEA"/>
+                <rect x="44" y="68" width="14" height="20" fill="#000"/>
+              </svg>
+              <div style="font-size:11px;color:#555">Scan to pay with MetaMask, Trust or Web3 Wallet</div>
+            </div>
+
+            <div style="max-width:440px;margin:18px auto 0">
+              <div style="font-size:12px;color:var(--text-muted);text-align:left;margin-bottom:4px">Ethereum Wallet Address:</div>
+              <div class="crypto-address-box">
+                <span id="ethAddressText">0x71C3F9A4d658514A79Cc65D2E1f58B43d56B0892</span>
+                <button class="btn btn-outline btn-sm" onclick="copyCryptoAddress('ethAddressText', 'คัดลอก Ethereum Address แล้ว')">📋 คัดลอก</button>
+              </div>
+            </div>
+
+            <div style="margin-top:24px">
+              <button class="btn btn-primary btn-lg w-full" onclick="simulateSuccessfulPayment('Ethereum (ETH)')" id="ethConfirmBtn" style="padding:16px;background:linear-gradient(135deg,#627EEA,#3B5998);border-color:#627EEA;color:#fff">
+                ⚡ ยืนยันการโอน Ethereum แล้ว (จำลองสำเร็จ)
+              </button>
+            </div>
           </div>
 
         </div>
