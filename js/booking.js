@@ -283,7 +283,7 @@ function renderPassengerDisplay() {
     if (sidebarEl) {
       sidebarEl.innerHTML = `
         <div style="color:var(--text-muted);font-size:13px;line-height:1.5">
-          👤 ขั้นตอนถัดไป: กรอกข้อมูลผู้โดยสาร
+          👤 กรอกข้อมูลผู้โดยสาร
         </div>
       `;
     }
